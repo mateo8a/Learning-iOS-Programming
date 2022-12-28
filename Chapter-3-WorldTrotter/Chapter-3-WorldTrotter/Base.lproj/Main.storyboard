@@ -24,6 +24,9 @@
                                 <color key="textColor" red="0.88235294119999996" green="0.34509803919999998" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="70"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="convertFtoC:" destination="BYZ-38-t0r" eventType="editingChanged" id="dGR-cd-HI0"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="degrees Farenheit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JP-xx-yns">
                                 <rect key="frame" x="69" y="249" width="276" height="43"/>
@@ -99,8 +102,12 @@
                             <constraint firstItem="pRZ-p6-qa6" firstAttribute="top" secondItem="GgW-rG-G52" secondAttribute="bottom" constant="1" id="yut-LB-M12"/>
                             <constraint firstItem="2zj-cb-CVf" firstAttribute="top" secondItem="MTc-tH-BcR" secondAttribute="bottom" constant="1" id="ywa-4r-HuX"/>
                             <constraint firstItem="GgW-rG-G52" firstAttribute="top" secondItem="z7X-FP-tye" secondAttribute="bottom" constant="1" id="zBw-r8-ndT"/>
+                            <constraint firstItem="qgX-6J-Bz9" firstAttribute="height" secondItem="3GV-6E-Ggu" secondAttribute="height" id="zX6-Lc-9Sh"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="celsiusLabel" destination="qgX-6J-Bz9" id="ybj-7A-aoZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,6 +8,11 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet var celsiusLabel: UILabel!
+    
+    @IBAction func convertFtoC(_ sender: UITextField) {
+        celsiusLabel.text = sender.text
+    }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

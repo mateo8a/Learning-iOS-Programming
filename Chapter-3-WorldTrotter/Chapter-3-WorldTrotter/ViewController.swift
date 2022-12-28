@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         let farenheit = sender.text!
         let celsius: Int
         if !farenheit.isEmpty {
-            var f = Int(farenheit)!
+            let f = Int(farenheit)!
             celsius = (f - 32) * 5 / 9
             celsiusLabel.text = "\(celsius)"
         } else {

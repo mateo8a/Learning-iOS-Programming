@@ -22,8 +22,8 @@
                                     <constraint firstAttribute="height" constant="84" id="ujg-v9-mMV"/>
                                 </constraints>
                                 <color key="textColor" red="0.88235294119999996" green="0.34509803919999998" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="70"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="70"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
                                     <action selector="convertFtoC:" destination="BYZ-38-t0r" eventType="editingChanged" id="dGR-cd-HI0"/>
                                 </connections>

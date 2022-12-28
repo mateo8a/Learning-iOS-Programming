@@ -11,7 +11,15 @@ class ViewController: UIViewController {
     @IBOutlet var celsiusLabel: UILabel!
     
     @IBAction func convertFtoC(_ sender: UITextField) {
-        celsiusLabel.text = sender.text
+        let farenheit = sender.text!
+        let celsius: Int
+        if !farenheit.isEmpty {
+            var f = Int(farenheit)!
+            celsius = (f - 32) * 5 / 9
+            celsiusLabel.text = "\(celsius)"
+        } else {
+            celsiusLabel.text = ""
+        }
     }
     
     override func viewWillLayoutSubviews() {

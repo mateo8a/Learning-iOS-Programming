@@ -107,6 +107,7 @@
                     </view>
                     <connections>
                         <outlet property="celsiusLabel" destination="qgX-6J-Bz9" id="ybj-7A-aoZ"/>
+                        <outlet property="farenheitTextField" destination="3GV-6E-Ggu" id="r3W-eW-zGo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -7,9 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController {
     @IBOutlet var celsiusLabel: UILabel!
     @IBOutlet var farenheitTextField: UITextField!
+    let textFieldDelegate = CustomTextFieldDelegate()
     
     @IBAction func convertFtoC(_ sender: UITextField) {
         let farenheit = sender.text!
@@ -36,14 +37,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        farenheitTextField.delegate = self
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let allowedCharacters = CharacterSet.decimalDigits
-        let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
+        farenheitTextField.delegate = textFieldDelegate
     }
 }
 

@@ -13,7 +13,7 @@
 		A21F621C2947F9AB0065BA42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A21F621A2947F9AB0065BA42 /* Main.storyboard */; };
 		A21F621E2947F9AC0065BA42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A21F621D2947F9AC0065BA42 /* Assets.xcassets */; };
 		A21F62212947F9AC0065BA42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A21F621F2947F9AC0065BA42 /* LaunchScreen.storyboard */; };
-		A2E7D45A295DE1EA005A8668 /* CustomTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E7D459295DE1EA005A8668 /* CustomTextDelegate.swift */; };
+		A2E7D45A295DE1EA005A8668 /* CustomTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E7D459295DE1EA005A8668 /* CustomTextFieldDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		A21F621D2947F9AC0065BA42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A21F62202947F9AC0065BA42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A21F62222947F9AC0065BA42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A2E7D459295DE1EA005A8668 /* CustomTextDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextDelegate.swift; sourceTree = "<group>"; };
+		A2E7D459295DE1EA005A8668 /* CustomTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 				A21F62142947F9AB0065BA42 /* AppDelegate.swift */,
 				A21F62162947F9AB0065BA42 /* SceneDelegate.swift */,
 				A21F62182947F9AB0065BA42 /* ViewController.swift */,
-				A2E7D459295DE1EA005A8668 /* CustomTextDelegate.swift */,
+				A2E7D459295DE1EA005A8668 /* CustomTextFieldDelegate.swift */,
 				A21F621A2947F9AB0065BA42 /* Main.storyboard */,
 				A21F621D2947F9AC0065BA42 /* Assets.xcassets */,
 				A21F621F2947F9AC0065BA42 /* LaunchScreen.storyboard */,
@@ -143,7 +143,7 @@
 			files = (
 				A21F62192947F9AB0065BA42 /* ViewController.swift in Sources */,
 				A21F62152947F9AB0065BA42 /* AppDelegate.swift in Sources */,
-				A2E7D45A295DE1EA005A8668 /* CustomTextDelegate.swift in Sources */,
+				A2E7D45A295DE1EA005A8668 /* CustomTextFieldDelegate.swift in Sources */,
 				A21F62172947F9AB0065BA42 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

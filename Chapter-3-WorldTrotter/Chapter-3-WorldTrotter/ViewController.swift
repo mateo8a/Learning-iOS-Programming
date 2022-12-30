@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: farenheitTextField, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
-    
+
     @IBAction func convertFtoC(_ sender: UITextField) {
         let farenheit = sender.text!
         let celsius: Int
@@ -44,4 +44,3 @@ class ViewController: UIViewController {
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
 }
-

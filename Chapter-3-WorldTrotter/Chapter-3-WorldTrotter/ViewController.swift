@@ -16,6 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         farenheitTextField.delegate = textFieldDelegate
         
+//        From https://stackoverflow.com/a/55983883
         let tap = UITapGestureRecognizer(target: farenheitTextField, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }

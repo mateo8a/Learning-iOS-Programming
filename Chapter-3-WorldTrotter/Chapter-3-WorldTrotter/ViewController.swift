@@ -12,6 +12,14 @@ class ViewController: UIViewController {
     @IBOutlet var farenheitTextField: UITextField!
     let textFieldDelegate = CustomTextFieldDelegate()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        farenheitTextField.delegate = textFieldDelegate
+        
+        let tap = UITapGestureRecognizer(target: farenheitTextField, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
+    }
+    
     @IBAction func convertFtoC(_ sender: UITextField) {
         let farenheit = sender.text!
         let celsius: Int
@@ -33,11 +41,6 @@ class ViewController: UIViewController {
         gradientLayer.locations = [0.1, 0.2, 0.3, 0.4, 1]
         
         view.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        farenheitTextField.delegate = textFieldDelegate
     }
 }
 

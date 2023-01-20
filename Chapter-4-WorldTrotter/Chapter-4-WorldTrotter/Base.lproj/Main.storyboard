@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -120,11 +119,6 @@
         <scene sceneID="2wR-KG-03T">
             <objects>
                 <viewController id="ZSN-cl-3Je" customClass="MapViewController" customModule="Chapter_4_WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
-                    <mapView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="oCO-L4-Y3N">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <standardMapConfiguration key="preferredConfiguration"/>
-                    </mapView>
                     <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="Avt-rg-hFB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IyX-Rj-0Db" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -137,12 +131,13 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Lnj-7B-KX0" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="quE-wt-jMz">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="mef-cb-3cj"/>
                         <segue destination="ZSN-cl-3Je" kind="relationship" relationship="viewControllers" id="iQ2-pg-epo"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="mef-cb-3cj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7J-1H-gAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

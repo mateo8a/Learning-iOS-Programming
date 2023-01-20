@@ -98,24 +98,6 @@ class MapViewController: UIViewController {
         }
     }
     
-    func toggleStandard(_ mapConf: MKStandardMapConfiguration, _ uiSwitch: UISwitch) {
-        if uiSwitch.isOn {
-            mapConf.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
-        } else {
-            mapConf.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
-        }
-        mapView.preferredConfiguration = mapConf
-    }
-    
-    func toggleHybrid(_ mapConf: MKHybridMapConfiguration, _ uiSwitch: UISwitch) {
-        if uiSwitch.isOn {
-            mapConf.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
-        } else {
-            mapConf.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
-        }
-        mapView.preferredConfiguration = mapConf
-    }
-    
     func toggle<T: PointsOfInterest>(_ mapConf: T, _ uiSwitch: UISwitch) {
         var newMapConf = mapConf
         if uiSwitch.isOn {

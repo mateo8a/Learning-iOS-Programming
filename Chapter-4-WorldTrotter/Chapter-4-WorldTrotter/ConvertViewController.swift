@@ -33,6 +33,7 @@ class ConvertViewController: UIViewController {
         let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
         farenheitTextField.font = UIFont(descriptor: titleFontDescriptor, size: 70)
         view.addSubview(farenheitTextField)
+        farenheitTextField.addTarget(self, action: #selector(convertFtoC(_:)), for: .editingChanged)
     }
     
     func setUpCelsiusLabel() {
@@ -87,7 +88,7 @@ class ConvertViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
 
-    func convertFtoC(_ sender: UITextField) {
+    @objc func convertFtoC(_ sender: UITextField) {
         let farenheit = sender.text!
         let celsius: Int
         if !farenheit.isEmpty {

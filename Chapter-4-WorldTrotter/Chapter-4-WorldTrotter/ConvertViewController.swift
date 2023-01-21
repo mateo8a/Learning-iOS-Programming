@@ -10,36 +10,72 @@ import UIKit
 class ConvertViewController: UIViewController {
     var farenheitTextField: UITextField!
     var celsiusLabel: UILabel!
+    var textField1: UITextField!
+    var textField2: UITextField!
+    var textField3: UITextField!
+    var stack: UIStackView!
     let textFieldDelegate = CustomTextFieldDelegate()
     
     override func loadView() {
         view = UIView()
         
+        setUpFarenheitTextField()
+        setUpTextLabels()
+        setUpCelsiusLabel()
+        setUpStack()
+    }
+    
+    func setUpFarenheitTextField() {
         farenheitTextField = UITextField()
         farenheitTextField.text = "32"
         farenheitTextField.keyboardType = .numberPad
-        farenheitTextField.textColor = .orange
-        let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
-        farenheitTextField.font = UIFont(descriptor: fontDescriptor, size: 70)
+        farenheitTextField.textColor = .systemOrange
+        let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
+        farenheitTextField.font = UIFont(descriptor: titleFontDescriptor, size: 70)
         view.addSubview(farenheitTextField)
-        
-        
-        
+    }
+    
+    func setUpCelsiusLabel() {
         celsiusLabel = UILabel()
         celsiusLabel.text = "0"
         celsiusLabel.textColor = .systemGreen
-        celsiusLabel.font = UIFont(descriptor: fontDescriptor, size: 70)
+        let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
+        celsiusLabel.font = UIFont(descriptor: titleFontDescriptor, size: 70)
         view.addSubview(celsiusLabel)
-
-        let margins = view.layoutMarginsGuide
-        farenheitTextField.translatesAutoresizingMaskIntoConstraints = false
-        farenheitTextField.topAnchor.constraint(equalTo: margins.topAnchor, constant: 20).isActive = true
-        farenheitTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
-        celsiusLabel.translatesAutoresizingMaskIntoConstraints = false
-        celsiusLabel.topAnchor.constraint(equalTo: farenheitTextField.bottomAnchor, constant: 20).isActive = true
-        celsiusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    func setUpTextLabels() {
+        textField1 = UITextField()
+        textField2 = UITextField()
+        textField3 = UITextField()
+        textField1.text = "degrees Farenheit"
+        textField2.text = "is really"
+        textField3.text = "degrees Celcius"
+        textField1.textColor = .systemOrange
+        textField2.textColor = .systemBlue
+        textField3.textColor = .systemGreen
+        let smallLabelsFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption1)
+        textField1.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
+        textField2.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
+        textField3.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
+        view.addSubview(textField1)
+        view.addSubview(textField2)
+        view.addSubview(textField3)
+    }
+    
+    func setUpStack() {
+        let stackedSubviews: [UIView] = [farenheitTextField, textField1, textField2, celsiusLabel, textField3]
+        stack = UIStackView(arrangedSubviews: stackedSubviews)
+        stack.alignment = .center
+        stack.axis = .vertical
+        stack.distribution = .equalCentering
+        view.addSubview(stack)
         
+        let margins = view.layoutMarginsGuide
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stack.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
+        stack.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
     }
     
     override func viewDidLoad() {

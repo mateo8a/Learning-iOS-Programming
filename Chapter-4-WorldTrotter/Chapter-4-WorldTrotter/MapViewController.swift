@@ -11,6 +11,10 @@ import MapKit
 class MapViewController: UIViewController {
     
     var mapView: MKMapView!
+    var segmentedControl: UISegmentedControl!
+    var switchLabel: UILabel!
+    var uiSwitch: UISwitch!
+    var stackView: UIStackView!
     
     override func loadView() {
         mapView = MKMapView()
@@ -22,7 +26,7 @@ class MapViewController: UIViewController {
     
     func addSegmentedControlSubview(view: UIView) {
         // Adding segmentedControl to the view
-        let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
+        segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
         segmentedControl.backgroundColor = UIColor.systemBackground
         segmentedControl.selectedSegmentIndex = 0
         
@@ -46,35 +50,30 @@ class MapViewController: UIViewController {
     
     func addPointsOfInterestSwitch(view: UIView) {
         // Label
-        let label = UILabel()
-        label.text = "Points of interest"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        let segControl = view.subviews.first { view in
-            let testedView = view.self as? UISegmentedControl
-            return testedView != nil
-        }!
+        switchLabel = UILabel()
+        switchLabel.text = "Points of interest"
+        switchLabel.translatesAutoresizingMaskIntoConstraints = false
 
         // Switch
-        let uiSwitch = UISwitch()
+        uiSwitch = UISwitch()
         uiSwitch.isOn = true
         uiSwitch.translatesAutoresizingMaskIntoConstraints = false
-        
-        uiSwitch.addTarget(self, action: #selector(pointsOfInterestChanged(_:)), for: .valueChanged)
+        uiSwitch.addTarget(self, action: #selector(pointsOfInterestChanged), for: .valueChanged)
         
         //Stack
-        let stackView = UIStackView(arrangedSubviews: [label, uiSwitch])
+        stackView = UIStackView(arrangedSubviews: [switchLabel, uiSwitch])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
         view.addSubview(stackView)
         
-        stackView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: 10).isActive = true
+        stackView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10).isActive = true
         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    @objc func mapTypeChanged(_ segControl: UISegmentedControl) {
-        switch segControl.selectedSegmentIndex {
+    @objc func mapTypeChanged(_ segmentedControl: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex {
         case 0:
             mapView.mapType = .standard
         case 1:
@@ -86,20 +85,20 @@ class MapViewController: UIViewController {
         }
     }
     
-    @objc func pointsOfInterestChanged(_ uiSwitch: UISwitch) {
+    @objc func pointsOfInterestChanged() {
         switch mapView.mapType {
         case .standard:
-            var mapConf = MKStandardMapConfiguration()
-            toggle(mapConf, uiSwitch)
+            let mapConf = MKStandardMapConfiguration()
+            toggle(mapConf)
         case .hybrid:
-            var mapConf = MKHybridMapConfiguration()
-            toggle(mapConf, uiSwitch)
+            let mapConf = MKHybridMapConfiguration()
+            toggle(mapConf)
         default:
             return
         }
     }
     
-    func toggle<T: PointsOfInterest>(_ mapConf: T, _ uiSwitch: UISwitch) {
+    func toggle<T: PointsOfInterest>(_ mapConf: T) {
         var newMapConf = mapConf
         if uiSwitch.isOn {
             newMapConf.pointOfInterestFilter = MKPointOfInterestFilter.includingAll

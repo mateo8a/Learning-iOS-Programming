@@ -45,6 +45,7 @@ class MapViewController: UIViewController {
     }
     
     func addPointsOfInterestSwitch(view: UIView) {
+        // Label
         let label = UILabel()
         label.text = "Points of interest"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -52,24 +53,24 @@ class MapViewController: UIViewController {
             let testedView = view.self as? UISegmentedControl
             return testedView != nil
         }!
-        view.addSubview(label)
-                
-        let topConstraint = label.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: 10)
-        let leadingConstraint = label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor)
-        
-        topConstraint.isActive = true
-        leadingConstraint.isActive = true
-        
+
+        // Switch
         let uiSwitch = UISwitch()
         uiSwitch.isOn = true
         uiSwitch.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(uiSwitch)
-        
-        uiSwitch.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: 10).isActive = true
-        uiSwitch.leadingAnchor.constraint(equalTo: label.trailingAnchor).isActive = true
-        
         
         uiSwitch.addTarget(self, action: #selector(pointsOfInterestChanged(_:)), for: .valueChanged)
+        
+        //Stack
+        let stackView = UIStackView(arrangedSubviews: [label, uiSwitch])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        view.addSubview(stackView)
+        
+        stackView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: 10).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     @objc func mapTypeChanged(_ segControl: UISegmentedControl) {

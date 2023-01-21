@@ -27,6 +27,7 @@ class ConvertViewController: UIViewController {
     
     func setUpFarenheitTextField() {
         farenheitTextField = UITextField()
+        farenheitTextField.attributedPlaceholder = NSAttributedString(string: "°F", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemOrange.withAlphaComponent(0.5)])
         farenheitTextField.text = "32"
         farenheitTextField.keyboardType = .numberPad
         farenheitTextField.textColor = .systemOrange

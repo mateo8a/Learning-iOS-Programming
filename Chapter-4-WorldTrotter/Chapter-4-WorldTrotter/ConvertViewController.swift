@@ -85,8 +85,12 @@ class ConvertViewController: UIViewController {
         farenheitTextField.delegate = textFieldDelegate
 
 //        From https://stackoverflow.com/a/55983883
-        let tap = UITapGestureRecognizer(target: farenheitTextField, action: #selector(UIView.endEditing))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        farenheitTextField.resignFirstResponder()
     }
 
     @objc func convertFtoC(_ sender: UITextField) {

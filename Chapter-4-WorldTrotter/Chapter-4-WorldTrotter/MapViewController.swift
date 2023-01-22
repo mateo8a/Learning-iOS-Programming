@@ -86,9 +86,10 @@ class MapViewController: UIViewController {
     }
     
     @objc func pointsOfInterestChanged() {
+        let mapConf: MKMapConfiguration
         switch mapView.mapType {
         case .standard:
-            let mapConf = MKStandardMapConfiguration()
+            mapConf = MKStandardMapConfiguration()
             toggle(mapConf)
         case .hybrid:
             let mapConf = MKHybridMapConfiguration()
@@ -98,13 +99,27 @@ class MapViewController: UIViewController {
         }
     }
     
-    func toggle<T: PointsOfInterest>(_ mapConf: T) {
-        var newMapConf = mapConf
-        if uiSwitch.isOn {
-            newMapConf.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
-        } else {
-            newMapConf.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
+    func toggle(_ mapConf: MKMapConfiguration) {
+        var standardMapConf: MKStandardMapConfiguration? = nil
+        var hybridMapConf: MKHybridMapConfiguration? = nil
+        if let newMapConf = mapConf as? MKStandardMapConfiguration {
+            standardMapConf = newMapConf
+        } else if let newMapConf = mapConf as? MKHybridMapConfiguration {
+            hybridMapConf = newMapConf
         }
-        mapView.preferredConfiguration = newMapConf as! MKMapConfiguration
+        
+        if uiSwitch.isOn {
+            standardMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
+            hybridMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
+        } else {
+            standardMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
+            hybridMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
+        }
+        
+        if let newMapConf = standardMapConf {
+            mapView.preferredConfiguration = newMapConf as MKMapConfiguration
+        } else if let newMapConf = hybridMapConf {
+            mapView.preferredConfiguration = newMapConf as MKMapConfiguration
+        }
     }
 }

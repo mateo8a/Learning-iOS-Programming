@@ -75,9 +75,12 @@ class ConvertViewController: UIViewController {
         uiLabel1 = UILabel()
         uiLabel2 = UILabel()
         uiLabel3 = UILabel()
-        uiLabel1.text = "degrees Farenheit"
-        uiLabel2.text = "is really"
-        uiLabel3.text = "degrees Celsius"
+        let farenheitString = NSLocalizedString("degrees Farenheit", comment: "the label for farenheit degrees")
+        let isReallyString = NSLocalizedString("is really", comment: "the label for is really")
+        let celsiusString = NSLocalizedString("degrees Celsius", comment: "the label for celsius degrees")
+        uiLabel1.text = farenheitString
+        uiLabel2.text = isReallyString
+        uiLabel3.text = celsiusString
         uiLabel1.textColor = .systemOrange
         uiLabel2.textColor = .systemBlue
         uiLabel3.textColor = .systemGreen
@@ -149,7 +152,7 @@ class ConvertViewController: UIViewController {
         if let newCelsiusValue = celsiusValue {
             celsiusLabel.text = numberFormatter.string(from: NSNumber(value: newCelsiusValue.value))
         } else {
-            celsiusLabel.text = ""
+            celsiusLabel.text = "°C"
         }
     }
 

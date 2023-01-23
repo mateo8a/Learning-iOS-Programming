@@ -50,7 +50,7 @@ class ConvertViewController: UIViewController {
         farenheitTextField = UITextField()
         farenheitTextField.attributedPlaceholder = NSAttributedString(string: "°F", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemOrange.withAlphaComponent(0.5)])
         farenheitTextField.text = "32"
-        farenheitTextField.keyboardType = .numberPad
+        farenheitTextField.keyboardType = .decimalPad
         farenheitTextField.textColor = .systemOrange
         let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
         farenheitTextField.font = UIFont(descriptor: titleFontDescriptor, size: 70)

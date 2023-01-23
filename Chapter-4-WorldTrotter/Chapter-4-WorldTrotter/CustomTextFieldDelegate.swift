@@ -10,7 +10,9 @@ import UIKit
 
 class CustomTextFieldDelegate: NSObject, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let allowedCharacters = CharacterSet.decimalDigits
+        let decimalCharacters = CharacterSet.decimalDigits
+        let punctuation = CharacterSet(charactersIn: ".")
+        let allowedCharacters = decimalCharacters.union(punctuation)
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
     }

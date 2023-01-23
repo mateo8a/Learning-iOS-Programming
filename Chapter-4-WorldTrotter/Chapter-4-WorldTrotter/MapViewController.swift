@@ -15,13 +15,20 @@ class MapViewController: UIViewController {
     var switchLabel: UILabel!
     var uiSwitch: UISwitch!
     var stackView: UIStackView!
+    let locationManager = CLLocationManager()
     
     override func loadView() {
         mapView = MKMapView()
+        mapView.delegate = self
         view = mapView
-        
+                
         addSegmentedControlSubview(view: view)
         addPointsOfInterestSwitch(view: view)
+    }
+    
+    override func viewDidLoad() {
+        mapView.showsUserLocation = true
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func addSegmentedControlSubview(view: UIView) {
@@ -120,6 +127,15 @@ class MapViewController: UIViewController {
             mapView.preferredConfiguration = newMapConf as MKMapConfiguration
         } else if let newMapConf = hybridMapConf {
             mapView.preferredConfiguration = newMapConf as MKMapConfiguration
+        }
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didUpdate: MKUserLocation) {
+        if let center = didUpdate.location?.coordinate {
+            let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+            mapView.setRegion(region, animated: true)
         }
     }
 }

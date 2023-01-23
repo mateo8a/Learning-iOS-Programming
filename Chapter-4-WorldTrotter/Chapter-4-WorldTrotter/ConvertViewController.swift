@@ -66,6 +66,8 @@ class ConvertViewController: UIViewController {
         celsiusLabel.textColor = .systemGreen
         let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
         celsiusLabel.font = UIFont(descriptor: titleFontDescriptor, size: 70)
+        celsiusLabel.numberOfLines = 0
+        celsiusLabel.textAlignment = .center
         view.addSubview(celsiusLabel)
     }
     

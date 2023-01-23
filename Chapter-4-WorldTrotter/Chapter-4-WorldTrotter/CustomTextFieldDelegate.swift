@@ -11,10 +11,20 @@ import UIKit
 class CustomTextFieldDelegate: NSObject, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let decimalCharacters = CharacterSet.decimalDigits
-        let punctuation = CharacterSet(charactersIn: ".")
-        let allowedCharacters = decimalCharacters.union(punctuation)
+        let decimalSeparator = Locale.current.decimalSeparator ?? "."
+        let decimalSeparatorCS = CharacterSet(charactersIn: decimalSeparator)
+        let allowedCharacters = decimalCharacters.union(decimalSeparatorCS)
         let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
+        
+        let allowedCharactersCondition = allowedCharacters.isSuperset(of: characterSet)
+        let oneDecimalSeparatorCondition = {
+            var containsDecimalSeparator: Bool = false
+            if let text = textField.text {
+                containsDecimalSeparator = text.contains(decimalSeparator)
+            }
+            return !(containsDecimalSeparator && string.contains(decimalSeparator))
+        }()
+        return allowedCharactersCondition && oneDecimalSeparatorCondition
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

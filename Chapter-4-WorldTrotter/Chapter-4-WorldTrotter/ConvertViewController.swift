@@ -119,8 +119,8 @@ class ConvertViewController: UIViewController {
     }
 
     @objc func convertFtoC(_ sender: UITextField) {
-        if let farenheitString = sender.text, let farenheit = Int(farenheitString) {
-            let celsius: Int = (farenheit - 32) * 5 / 9
+        if let farenheitString = sender.text, let farenheit = Double(farenheitString) {
+            let celsius: Double = (farenheit - 32) * 5 / 9
             celsiusLabel.text = "\(celsius)"
         } else {
             celsiusLabel.text = ""
@@ -128,8 +128,8 @@ class ConvertViewController: UIViewController {
     }
     
     @objc func changeFarenheit(_ sender: UITextField) {
-        if let farenheitString = sender.text, let newFValue = Double(farenheitString) {
-            farenheitValue = Measurement<UnitTemperature>(value: newFValue, unit: .fahrenheit)
+        if let farenheitString = sender.text, let newFValue = numberFormatter.number(from: farenheitString) {
+            farenheitValue = Measurement<UnitTemperature>(value: Double(truncating: newFValue), unit: .fahrenheit)
         } else {
             farenheitValue = nil
         }

@@ -16,6 +16,7 @@ class MapViewController: UIViewController {
     var uiSwitch: UISwitch!
     var stackView: UIStackView!
     let locationManager = CLLocationManager()
+    var updatedOnce = false
     
     override func loadView() {
         mapView = MKMapView()
@@ -136,10 +137,13 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, didUpdate: MKUserLocation) {
+        guard !updatedOnce else { return }
         if let center = didUpdate.location?.coordinate {
             let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
             mapView.setRegion(region, animated: true)
+            updatedOnce = true
         }
     }
 }

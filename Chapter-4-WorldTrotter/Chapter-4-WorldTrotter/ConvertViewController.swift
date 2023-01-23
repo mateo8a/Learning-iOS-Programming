@@ -63,7 +63,7 @@ class ConvertViewController: UIViewController {
     func setUpCelsiusLabel() {
         celsiusLabel = UILabel()
         celsiusLabel.text = "0"
-        celsiusLabel.textColor = .systemGreen
+        celsiusLabel.textColor = .systemBlue
         let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
         celsiusLabel.font = UIFont(descriptor: titleFontDescriptor, size: 70)
         celsiusLabel.numberOfLines = 0
@@ -82,8 +82,8 @@ class ConvertViewController: UIViewController {
         uiLabel2.text = isReallyString
         uiLabel3.text = celsiusString
         uiLabel1.textColor = .systemOrange
-        uiLabel2.textColor = .systemBlue
-        uiLabel3.textColor = .systemGreen
+        uiLabel2.textColor = .systemPurple
+        uiLabel3.textColor = .blue
         let smallLabelsFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption1)
         uiLabel1.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
         uiLabel2.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
@@ -152,7 +152,8 @@ class ConvertViewController: UIViewController {
         if let newCelsiusValue = celsiusValue {
             celsiusLabel.text = numberFormatter.string(from: NSNumber(value: newCelsiusValue.value))
         } else {
-            celsiusLabel.text = "°C"
+            let formattedEmptyCelsius = NSAttributedString(string: "°C", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemBlue.withAlphaComponent(0.5)])
+            celsiusLabel.attributedText = formattedEmptyCelsius
         }
     }
 

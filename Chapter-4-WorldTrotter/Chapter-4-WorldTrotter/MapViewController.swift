@@ -33,7 +33,10 @@ class MapViewController: UIViewController {
     
     func addSegmentedControlSubview(view: UIView) {
         // Adding segmentedControl to the view
-        segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
+        let standardString = NSLocalizedString("Standard", comment: "standard map view")
+        let hybridString = NSLocalizedString("Hybrid", comment: "hybrid map view")
+        let satelliteString = NSLocalizedString("Satellite", comment: "satellite map view")
+        segmentedControl = UISegmentedControl(items: [standardString, hybridString, satelliteString])
         segmentedControl.backgroundColor = UIColor.systemBackground
         segmentedControl.selectedSegmentIndex = 0
         
@@ -58,7 +61,8 @@ class MapViewController: UIViewController {
     func addPointsOfInterestSwitch(view: UIView) {
         // Label
         switchLabel = UILabel()
-        switchLabel.text = "Points of interest"
+        let pointsOfInterestString = NSLocalizedString("Points of Interest", comment: "the points of interest on the map")
+        switchLabel.text = pointsOfInterestString
         switchLabel.translatesAutoresizingMaskIntoConstraints = false
 
         // Switch

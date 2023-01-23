@@ -77,7 +77,7 @@ class ConvertViewController: UIViewController {
         uiLabel3 = UILabel()
         uiLabel1.text = "degrees Farenheit"
         uiLabel2.text = "is really"
-        uiLabel3.text = "degrees Celcius"
+        uiLabel3.text = "degrees Celsius"
         uiLabel1.textColor = .systemOrange
         uiLabel2.textColor = .systemBlue
         uiLabel3.textColor = .systemGreen

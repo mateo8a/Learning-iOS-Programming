@@ -14,6 +14,7 @@
 		A21F621E2947F9AC0065BA42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A21F621D2947F9AC0065BA42 /* Assets.xcassets */; };
 		A21F62212947F9AC0065BA42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A21F621F2947F9AC0065BA42 /* LaunchScreen.storyboard */; };
 		A2554A05297F00E100DFFF38 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2554A07297F00E100DFFF38 /* Localizable.strings */; };
+		A2554A0D297F321300DFFF38 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2554A0B297F321300DFFF38 /* InfoPlist.strings */; };
 		A2E7D45A295DE1EA005A8668 /* CustomTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E7D459295DE1EA005A8668 /* CustomTextFieldDelegate.swift */; };
 		A2ECE07E297A369E00761E51 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECE07D297A369E00761E51 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
@@ -31,6 +32,8 @@
 		A2554A02297EF8AF00DFFF38 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		A2554A06297F00E100DFFF38 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2554A08297F010E00DFFF38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A2554A0C297F321300DFFF38 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2554A0E297F325000DFFF38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A2E7D459295DE1EA005A8668 /* CustomTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldDelegate.swift; sourceTree = "<group>"; };
 		A2ECE07D297A369E00761E51 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,6 +78,7 @@
 				A21F621D2947F9AC0065BA42 /* Assets.xcassets */,
 				A21F621F2947F9AC0065BA42 /* LaunchScreen.storyboard */,
 				A21F62222947F9AC0065BA42 /* Info.plist */,
+				A2554A0B297F321300DFFF38 /* InfoPlist.strings */,
 			);
 			path = "Chapter-4-WorldTrotter";
 			sourceTree = "<group>";
@@ -142,6 +146,7 @@
 				A2554A05297F00E100DFFF38 /* Localizable.strings in Resources */,
 				A21F621E2947F9AC0065BA42 /* Assets.xcassets in Resources */,
 				A21F621C2947F9AB0065BA42 /* Main.storyboard in Resources */,
+				A2554A0D297F321300DFFF38 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +193,15 @@
 				A2554A08297F010E00DFFF38 /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A2554A0B297F321300DFFF38 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2554A0C297F321300DFFF38 /* es */,
+				A2554A0E297F325000DFFF38 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

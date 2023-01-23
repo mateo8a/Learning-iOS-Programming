@@ -14,7 +14,28 @@ class ConvertViewController: UIViewController {
     var textField2: UITextField!
     var textField3: UITextField!
     var stack: UIStackView!
+    var farenheitValue: Measurement<UnitTemperature>? {
+        didSet {
+            changeCelsiusLabel()
+        }
+    }
+    var celsiusValue: Measurement<UnitTemperature>? {
+        if let farenheitValue = farenheitValue {
+            return farenheitValue.converted(to: .celsius)
+        } else {
+            return nil
+        }
+    }
+    
     let textFieldDelegate = CustomTextFieldDelegate()
+    
+    let numberFormatter: NumberFormatter = {
+        let nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        nf.minimumFractionDigits = 0
+        nf.maximumFractionDigits = 1
+        return nf
+    }()
     
     override func loadView() {
         view = UIView()
@@ -27,13 +48,16 @@ class ConvertViewController: UIViewController {
     
     func setUpFarenheitTextField() {
         farenheitTextField = UITextField()
+        farenheitTextField.attributedPlaceholder = NSAttributedString(string: "°F", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemOrange.withAlphaComponent(0.5)])
         farenheitTextField.text = "32"
         farenheitTextField.keyboardType = .numberPad
         farenheitTextField.textColor = .systemOrange
         let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
         farenheitTextField.font = UIFont(descriptor: titleFontDescriptor, size: 70)
         view.addSubview(farenheitTextField)
-        farenheitTextField.addTarget(self, action: #selector(convertFtoC(_:)), for: .editingChanged)
+        // Two ways of doing the conversion:
+//        farenheitTextField.addTarget(self, action: #selector(convertFtoC(_:)), for: .editingChanged)
+        farenheitTextField.addTarget(self, action: #selector(changeFarenheit(_:)), for: .editingChanged)
     }
     
     func setUpCelsiusLabel() {
@@ -84,17 +108,36 @@ class ConvertViewController: UIViewController {
         farenheitTextField.delegate = textFieldDelegate
 
 //        From https://stackoverflow.com/a/55983883
-        let tap = UITapGestureRecognizer(target: farenheitTextField, action: #selector(UIView.endEditing))
+        let tap = UITapGestureRecognizer(target: farenheitTextField, action: #selector(UIView.endEditing(_:)))
+        // Another way of doing the same as above:
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        farenheitTextField.resignFirstResponder()
     }
 
     @objc func convertFtoC(_ sender: UITextField) {
-        let farenheit = sender.text!
-        let celsius: Int
-        if !farenheit.isEmpty {
-            let f = Int(farenheit)!
-            celsius = (f - 32) * 5 / 9
+        if let farenheitString = sender.text, let farenheit = Int(farenheitString) {
+            let celsius: Int = (farenheit - 32) * 5 / 9
             celsiusLabel.text = "\(celsius)"
+        } else {
+            celsiusLabel.text = ""
+        }
+    }
+    
+    @objc func changeFarenheit(_ sender: UITextField) {
+        if let farenheitString = sender.text, let newFValue = Double(farenheitString) {
+            farenheitValue = Measurement<UnitTemperature>(value: newFValue, unit: .fahrenheit)
+        } else {
+            farenheitValue = nil
+        }
+    }
+    
+    func changeCelsiusLabel() {
+        if let newCelsiusValue = celsiusValue {
+            celsiusLabel.text = numberFormatter.string(from: NSNumber(value: newCelsiusValue.value))
         } else {
             celsiusLabel.text = ""
         }

@@ -15,13 +15,20 @@ class MapViewController: UIViewController {
     var switchLabel: UILabel!
     var uiSwitch: UISwitch!
     var stackView: UIStackView!
+    let locationManager = CLLocationManager()
     
     override func loadView() {
         mapView = MKMapView()
+        mapView.delegate = self
         view = mapView
-        
+                
         addSegmentedControlSubview(view: view)
         addPointsOfInterestSwitch(view: view)
+    }
+    
+    override func viewDidLoad() {
+        mapView.showsUserLocation = true
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func addSegmentedControlSubview(view: UIView) {
@@ -86,9 +93,10 @@ class MapViewController: UIViewController {
     }
     
     @objc func pointsOfInterestChanged() {
+        let mapConf: MKMapConfiguration
         switch mapView.mapType {
         case .standard:
-            let mapConf = MKStandardMapConfiguration()
+            mapConf = MKStandardMapConfiguration()
             toggle(mapConf)
         case .hybrid:
             let mapConf = MKHybridMapConfiguration()
@@ -98,13 +106,36 @@ class MapViewController: UIViewController {
         }
     }
     
-    func toggle<T: PointsOfInterest>(_ mapConf: T) {
-        var newMapConf = mapConf
-        if uiSwitch.isOn {
-            newMapConf.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
-        } else {
-            newMapConf.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
+    func toggle(_ mapConf: MKMapConfiguration) {
+        var standardMapConf: MKStandardMapConfiguration? = nil
+        var hybridMapConf: MKHybridMapConfiguration? = nil
+        if let newMapConf = mapConf as? MKStandardMapConfiguration {
+            standardMapConf = newMapConf
+        } else if let newMapConf = mapConf as? MKHybridMapConfiguration {
+            hybridMapConf = newMapConf
         }
-        mapView.preferredConfiguration = newMapConf as! MKMapConfiguration
+        
+        if uiSwitch.isOn {
+            standardMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
+            hybridMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
+        } else {
+            standardMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
+            hybridMapConf?.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
+        }
+        
+        if let newMapConf = standardMapConf {
+            mapView.preferredConfiguration = newMapConf as MKMapConfiguration
+        } else if let newMapConf = hybridMapConf {
+            mapView.preferredConfiguration = newMapConf as MKMapConfiguration
+        }
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didUpdate: MKUserLocation) {
+        if let center = didUpdate.location?.coordinate {
+            let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+            mapView.setRegion(region, animated: true)
+        }
     }
 }

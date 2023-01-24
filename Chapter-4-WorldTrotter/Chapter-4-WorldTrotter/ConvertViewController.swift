@@ -10,9 +10,9 @@ import UIKit
 class ConvertViewController: UIViewController {
     var farenheitTextField: UITextField!
     var celsiusLabel: UILabel!
-    var textField1: UITextField!
-    var textField2: UITextField!
-    var textField3: UITextField!
+    var uiLabel1: UILabel!
+    var uiLabel2: UILabel!
+    var uiLabel3: UILabel!
     var stack: UIStackView!
     var farenheitValue: Measurement<UnitTemperature>? {
         didSet {
@@ -50,7 +50,7 @@ class ConvertViewController: UIViewController {
         farenheitTextField = UITextField()
         farenheitTextField.attributedPlaceholder = NSAttributedString(string: "°F", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemOrange.withAlphaComponent(0.5)])
         farenheitTextField.text = "32"
-        farenheitTextField.keyboardType = .numberPad
+        farenheitTextField.keyboardType = .decimalPad
         farenheitTextField.textColor = .systemOrange
         let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
         farenheitTextField.font = UIFont(descriptor: titleFontDescriptor, size: 70)
@@ -63,33 +63,44 @@ class ConvertViewController: UIViewController {
     func setUpCelsiusLabel() {
         celsiusLabel = UILabel()
         celsiusLabel.text = "0"
-        celsiusLabel.textColor = .systemGreen
+        celsiusLabel.textColor = .systemBlue
         let titleFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
         celsiusLabel.font = UIFont(descriptor: titleFontDescriptor, size: 70)
+        celsiusLabel.numberOfLines = 0
+        celsiusLabel.textAlignment = .center
         view.addSubview(celsiusLabel)
     }
     
     func setUpTextLabels() {
-        textField1 = UITextField()
-        textField2 = UITextField()
-        textField3 = UITextField()
-        textField1.text = "degrees Farenheit"
-        textField2.text = "is really"
-        textField3.text = "degrees Celcius"
-        textField1.textColor = .systemOrange
-        textField2.textColor = .systemBlue
-        textField3.textColor = .systemGreen
+        uiLabel1 = UILabel()
+        uiLabel2 = UILabel()
+        uiLabel3 = UILabel()
+        let farenheitString = NSLocalizedString("degrees Farenheit", comment: "the label for farenheit degrees")
+        let isReallyString = NSLocalizedString("is really", comment: "the label for is really")
+        let celsiusString = NSLocalizedString("degrees Celsius", comment: "the label for celsius degrees")
+        uiLabel1.text = farenheitString
+        uiLabel2.text = isReallyString
+        uiLabel3.text = celsiusString
+        uiLabel1.textColor = .systemOrange
+        uiLabel2.textColor = .systemPurple
+        uiLabel3.textColor = .blue
         let smallLabelsFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption1)
-        textField1.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
-        textField2.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
-        textField3.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
-        view.addSubview(textField1)
-        view.addSubview(textField2)
-        view.addSubview(textField3)
+        uiLabel1.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
+        uiLabel2.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
+        uiLabel3.font = UIFont(descriptor: smallLabelsFontDescriptor, size: 35)
+        uiLabel1.numberOfLines = 0
+        uiLabel2.numberOfLines = 0
+        uiLabel3.numberOfLines = 0
+        uiLabel1.textAlignment = .center
+        uiLabel2.textAlignment = .center
+        uiLabel3.textAlignment = .center
+        view.addSubview(uiLabel1)
+        view.addSubview(uiLabel2)
+        view.addSubview(uiLabel3)
     }
     
     func setUpStack() {
-        let stackedSubviews: [UIView] = [farenheitTextField, textField1, textField2, celsiusLabel, textField3]
+        let stackedSubviews: [UIView] = [farenheitTextField, uiLabel1, uiLabel2, celsiusLabel, uiLabel3]
         stack = UIStackView(arrangedSubviews: stackedSubviews)
         stack.alignment = .center
         stack.axis = .vertical
@@ -101,6 +112,8 @@ class ConvertViewController: UIViewController {
         stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stack.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         stack.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        stack.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        stack.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
     }
     
     override func viewDidLoad() {
@@ -119,8 +132,8 @@ class ConvertViewController: UIViewController {
     }
 
     @objc func convertFtoC(_ sender: UITextField) {
-        if let farenheitString = sender.text, let farenheit = Int(farenheitString) {
-            let celsius: Int = (farenheit - 32) * 5 / 9
+        if let farenheitString = sender.text, let farenheit = Double(farenheitString) {
+            let celsius: Double = (farenheit - 32) * 5 / 9
             celsiusLabel.text = "\(celsius)"
         } else {
             celsiusLabel.text = ""
@@ -128,8 +141,8 @@ class ConvertViewController: UIViewController {
     }
     
     @objc func changeFarenheit(_ sender: UITextField) {
-        if let farenheitString = sender.text, let newFValue = Double(farenheitString) {
-            farenheitValue = Measurement<UnitTemperature>(value: newFValue, unit: .fahrenheit)
+        if let farenheitString = sender.text, let newFValue = numberFormatter.number(from: farenheitString) {
+            farenheitValue = Measurement<UnitTemperature>(value: Double(truncating: newFValue), unit: .fahrenheit)
         } else {
             farenheitValue = nil
         }
@@ -139,7 +152,8 @@ class ConvertViewController: UIViewController {
         if let newCelsiusValue = celsiusValue {
             celsiusLabel.text = numberFormatter.string(from: NSNumber(value: newCelsiusValue.value))
         } else {
-            celsiusLabel.text = ""
+            let formattedEmptyCelsius = NSAttributedString(string: "°C", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemBlue.withAlphaComponent(0.5)])
+            celsiusLabel.attributedText = formattedEmptyCelsius
         }
     }
 

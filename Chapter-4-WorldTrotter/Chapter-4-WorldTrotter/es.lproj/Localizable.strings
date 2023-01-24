@@ -1,0 +1,21 @@
+/* the label for celsius degrees */
+"degrees Celsius" = "grados centígrados";
+
+/* the label for farenheit degrees */
+"degrees Farenheit" = "grados farenheit";
+
+/* hybrid map view */
+"Hybrid" = "Híbrido";
+
+/* the label for is really */
+"is really" = "es en realidad";
+
+/* the points of interest on the map */
+"Points of Interest" = "Puntos de Interés";
+
+/* satellite map view */
+"Satellite" = "Satélite";
+
+/* standard map view */
+"Standard" = "Estándar";
+

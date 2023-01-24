@@ -16,14 +16,15 @@ class MapViewController: UIViewController {
     var uiSwitch: UISwitch!
     var stackView: UIStackView!
     let locationManager = CLLocationManager()
+    var updatedOnce = false
     
     override func loadView() {
         mapView = MKMapView()
         mapView.delegate = self
         view = mapView
                 
-        addSegmentedControlSubview(view: view)
-        addPointsOfInterestSwitch(view: view)
+        addSegmentedControlSubview()
+        addPointsOfInterestSwitch()
     }
     
     override func viewDidLoad() {
@@ -31,9 +32,12 @@ class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
     }
     
-    func addSegmentedControlSubview(view: UIView) {
+    func addSegmentedControlSubview() {
         // Adding segmentedControl to the view
-        segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
+        let standardString = NSLocalizedString("Standard", comment: "standard map view")
+        let hybridString = NSLocalizedString("Hybrid", comment: "hybrid map view")
+        let satelliteString = NSLocalizedString("Satellite", comment: "satellite map view")
+        segmentedControl = UISegmentedControl(items: [standardString, hybridString, satelliteString])
         segmentedControl.backgroundColor = UIColor.systemBackground
         segmentedControl.selectedSegmentIndex = 0
         
@@ -55,10 +59,11 @@ class MapViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(mapTypeChanged(_:)), for: .valueChanged)
     }
     
-    func addPointsOfInterestSwitch(view: UIView) {
+    func addPointsOfInterestSwitch() {
         // Label
         switchLabel = UILabel()
-        switchLabel.text = "Points of interest"
+        let pointsOfInterestString = NSLocalizedString("Points of Interest", comment: "the points of interest on the map")
+        switchLabel.text = pointsOfInterestString
         switchLabel.translatesAutoresizingMaskIntoConstraints = false
 
         // Switch
@@ -73,6 +78,13 @@ class MapViewController: UIViewController {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
+        addStackView()
+    }
+    
+    func addStackView() {
+        if let _ = view.subviews.firstIndex(of: stackView) {
+            return
+        }
         view.addSubview(stackView)
         
         stackView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10).isActive = true
@@ -83,10 +95,13 @@ class MapViewController: UIViewController {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             mapView.mapType = .standard
+            addStackView()
         case 1:
             mapView.mapType = .hybrid
+            addStackView()
         case 2:
             mapView.mapType = .satellite
+            stackView.removeFromSuperview()
         default:
             break
         }
@@ -132,10 +147,13 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, didUpdate: MKUserLocation) {
+        guard !updatedOnce else { return }
         if let center = didUpdate.location?.coordinate {
             let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
             mapView.setRegion(region, animated: true)
+            updatedOnce = true
         }
     }
 }

@@ -150,6 +150,7 @@ class ConvertViewController: UIViewController {
     
     func changeCelsiusLabel() {
         if let newCelsiusValue = celsiusValue {
+            celsiusLabel.textColor = .systemBlue
             celsiusLabel.text = numberFormatter.string(from: NSNumber(value: newCelsiusValue.value))
         } else {
             let formattedEmptyCelsius = NSAttributedString(string: "°C", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemBlue.withAlphaComponent(0.5)])

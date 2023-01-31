@@ -30,13 +30,25 @@ class ItemStore {
         }
     }
     
-    func moveItem(from fromIndex: Int, to toIndex: Int) {
+    func moveItem(from fromIndex: IndexPath, to toIndex: IndexPath) {
         if fromIndex == toIndex { return }
+        if fromIndex.section != toIndex.section { return }
         
-        let movedItem = allItems[fromIndex]
-        allItems.remove(at: fromIndex)
-        allItems.insert(movedItem, at: toIndex)
-        allItems[toIndex] = movedItem
+        let row = fromIndex.row
+        let sectionItems: [Item]
+        if fromIndex.section == 0 {
+            sectionItems = itemsOverFifty(false)
+        } else {
+            sectionItems = itemsOverFifty(true)
+        }
+        
+        let movedItem = sectionItems[row]
+        let removeIndex = allItems.firstIndex(of: movedItem)!
+        let inFrontOfItem = sectionItems[toIndex.row]
+        let insertIndex = allItems.firstIndex(of: inFrontOfItem)!
+        allItems.remove(at: removeIndex)
+        allItems.insert(movedItem, at: insertIndex)
+//        print(allItems.map {"\($0.name): \($0.valueInDollars)"})
     }
     
     func itemsOverFifty(_ show: Bool) -> [Item] {
@@ -49,5 +61,17 @@ class ItemStore {
         }
         
         return itemsOverFifty
+    }
+    
+    func itemAt(_ indexPath: IndexPath) -> Item {
+        let section = indexPath.section
+        let row = indexPath.row
+        let item: Item
+        if section == 0 {
+            item = itemsOverFifty(false)[row]
+        } else {
+            item = itemsOverFifty(true)[row]
+        }
+        return item
     }
 }

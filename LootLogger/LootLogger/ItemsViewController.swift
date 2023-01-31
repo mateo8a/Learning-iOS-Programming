@@ -40,14 +40,7 @@ class ItemsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        let item: Item
-        if indexPath.section == 0 {
-            let items = itemStore.itemsOverFifty(false)
-            item = items[indexPath.row]
-        } else {
-            let items = itemStore.itemsOverFifty(true)
-            item = items[indexPath.row]
-        }
+        let item = itemStore.itemAt(indexPath)
         
         var contentConf = cell.defaultContentConfiguration()
         contentConf.text = item.name
@@ -59,22 +52,29 @@ class ItemsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = itemStore.allItems[indexPath.row]
+            let item = itemStore.itemAt(indexPath)
             itemStore.deleteItem(item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        itemStore.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        itemStore.moveItem(from: sourceIndexPath, to: destinationIndexPath)
     }
     
     @IBAction func addNewItem(_ sender: UIButton) {
         let newItem = itemStore.createItem()
-        if let index = itemStore.allItems.firstIndex(of: newItem) {
-            let indexPath = IndexPath(row: index, section: 1)
-            tableView.insertRows(at: [indexPath], with: .automatic)
+        let row: Int
+        let section: Int
+        if newItem.valueInDollars <= 50 {
+            row = itemStore.itemsOverFifty(false).firstIndex(of: newItem)!
+            section = 0
+        } else {
+            row = itemStore.itemsOverFifty(true).firstIndex(of: newItem)!
+            section = 1
         }
+        let indexPath = IndexPath(row: row, section: section)
+        tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
     @IBAction func toggleEditingMode(_ sender: UIButton) {

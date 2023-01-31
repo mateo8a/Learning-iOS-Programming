@@ -62,6 +62,14 @@ class ItemsViewController: UITableViewController {
         itemStore.moveItem(from: sourceIndexPath, to: destinationIndexPath)
     }
     
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if sourceIndexPath.section != proposedDestinationIndexPath.section {
+            return sourceIndexPath
+        } else {
+            return proposedDestinationIndexPath
+        }
+    }
+    
     @IBAction func addNewItem(_ sender: UIButton) {
         let newItem = itemStore.createItem()
         let row: Int

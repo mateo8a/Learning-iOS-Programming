@@ -63,13 +63,13 @@ class ItemStore {
         return itemsOverFifty
     }
     
-    func itemAt(_ indexPath: IndexPath) -> Item {
+    func itemAt(_ indexPath: IndexPath) -> Item? {
         let section = indexPath.section
         let row = indexPath.row
-        let item: Item
-        if section == 0 {
+        var item: Item? = nil
+        if section == 0, itemsOverFifty(false).count > 0 {
             item = itemsOverFifty(false)[row]
-        } else {
+        } else if section == 1, itemsOverFifty(true).count > 0 {
             item = itemsOverFifty(true)[row]
         }
         return item

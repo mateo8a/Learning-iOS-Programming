@@ -30,9 +30,9 @@ class ItemsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return itemStore.itemsOverFifty(false).count
+            return max(1, itemStore.itemsOverFifty(false).count)
         case 1:
-            return itemStore.itemsOverFifty(true).count
+            return max(1, itemStore.itemsOverFifty(true).count)
         default:
             return 0
         }
@@ -40,21 +40,34 @@ class ItemsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        let item = itemStore.itemAt(indexPath)
-        
         var contentConf = cell.defaultContentConfiguration()
-        contentConf.text = item.name
-        contentConf.secondaryText = "$\(item.valueInDollars)"
-        cell.contentConfiguration = contentConf
+        if let item = itemStore.itemAt(indexPath) {
+            
+            contentConf.text = item.name
+            contentConf.secondaryText = "$\(item.valueInDollars)"
+            cell.contentConfiguration = contentConf
+        } else {
+            contentConf.text = "No items"
+            cell.contentConfiguration = contentConf
+        }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = itemStore.itemAt(indexPath)
-            itemStore.deleteItem(item)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            let item = itemStore.itemAt(indexPath)!
+            if tableView.numberOfRows(inSection: indexPath.section) == 1 {
+                let updates: () -> Void = {
+                    self.itemStore.deleteItem(item)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                    tableView.insertRows(at: [indexPath], with: .automatic)
+                }
+                tableView.performBatchUpdates(updates)
+            } else {
+                itemStore.deleteItem(item)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         }
     }
     
@@ -74,15 +87,29 @@ class ItemsViewController: UITableViewController {
         let newItem = itemStore.createItem()
         let row: Int
         let section: Int
+        let onlyItem: Bool
         if newItem.valueInDollars <= 50 {
-            row = itemStore.itemsOverFifty(false).firstIndex(of: newItem)!
+            let items = itemStore.itemsOverFifty(false)
+            row = items.firstIndex(of: newItem)!
             section = 0
+            onlyItem = items.count == 1
         } else {
-            row = itemStore.itemsOverFifty(true).firstIndex(of: newItem)!
+            let items = itemStore.itemsOverFifty(true)
+            row = items.firstIndex(of: newItem)!
             section = 1
+            onlyItem = items.count == 1
         }
         let indexPath = IndexPath(row: row, section: section)
-        tableView.insertRows(at: [indexPath], with: .automatic)
+        
+        if onlyItem {
+            var updates: () -> Void = {
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+            tableView.performBatchUpdates(updates)
+        } else {
+            tableView.insertRows(at: [indexPath], with: .automatic)
+        }
     }
     
     @IBAction func toggleEditingMode(_ sender: UIButton) {

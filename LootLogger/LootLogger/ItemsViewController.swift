@@ -10,13 +10,44 @@ import UIKit
 class ItemsViewController: UITableViewController {
     var itemStore: ItemStore!
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    override func tableView(_: UITableView, titleForHeaderInSection: Int) -> String? {
+        let sectionTitle: String?
+        switch titleForHeaderInSection {
+        case 0:
+            sectionTitle = "Items below $50"
+        case 1:
+            sectionTitle = "Items above $50"
+        default:
+            sectionTitle = ""
+        }
+        return sectionTitle
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemStore.allItems.count
+        switch section {
+        case 0:
+            return itemStore.itemsOverFifty(false).count
+        case 1:
+            return itemStore.itemsOverFifty(true).count
+        default:
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        let item = itemStore.allItems[indexPath.row]
+        let item: Item
+        if indexPath.section == 0 {
+            let items = itemStore.itemsOverFifty(false)
+            item = items[indexPath.row]
+        } else {
+            let items = itemStore.itemsOverFifty(true)
+            item = items[indexPath.row]
+        }
         
         var contentConf = cell.defaultContentConfiguration()
         contentConf.text = item.name
@@ -41,7 +72,7 @@ class ItemsViewController: UITableViewController {
     @IBAction func addNewItem(_ sender: UIButton) {
         let newItem = itemStore.createItem()
         if let index = itemStore.allItems.firstIndex(of: newItem) {
-            let indexPath = IndexPath(row: index, section: 0)
+            let indexPath = IndexPath(row: index, section: 1)
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
     }

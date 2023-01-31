@@ -38,4 +38,16 @@ class ItemStore {
         allItems.insert(movedItem, at: toIndex)
         allItems[toIndex] = movedItem
     }
+    
+    func itemsOverFifty(_ show: Bool) -> [Item] {
+        let itemsOverFifty = allItems.filter { item in
+            if show {
+                return item.valueInDollars > 50
+            } else {
+                return item.valueInDollars <= 50
+            }
+        }
+        
+        return itemsOverFifty
+    }
 }

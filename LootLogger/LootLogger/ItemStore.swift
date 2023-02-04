@@ -63,14 +63,30 @@ class ItemStore {
         return itemsOverFifty
     }
     
-    func itemAt(_ indexPath: IndexPath) -> Item? {
+    func itemAt(_ indexPath: IndexPath, onlyFavorites: Bool) -> Item? {
         let section = indexPath.section
         let row = indexPath.row
         var item: Item? = nil
         if section == 0, itemsOverFifty(false).count > 0 {
-            item = itemsOverFifty(false)[row]
+            if onlyFavorites {
+                let items = itemsOverFifty(false).filter { $0.isFavorite }
+                if items.count > 0 {
+                    item = items[row]
+                }
+
+            } else {
+                item = itemsOverFifty(false)[row]
+            }
         } else if section == 1, itemsOverFifty(true).count > 0 {
-            item = itemsOverFifty(true)[row]
+            if onlyFavorites {
+                let items = itemsOverFifty(true).filter { $0.isFavorite }
+                if items.count > 0 {
+                    item = items[row]
+                }
+
+            } else {
+                item = itemsOverFifty(true)[row]
+            }
         }
         return item
     }

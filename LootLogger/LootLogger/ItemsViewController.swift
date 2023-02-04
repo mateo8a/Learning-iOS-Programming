@@ -9,6 +9,12 @@ import UIKit
 
 class ItemsViewController: UITableViewController {
     var itemStore: ItemStore!
+    var showOnlyFavorites: Bool = false {
+        didSet {
+            let tableView = view as! UITableView
+            tableView.reloadData()
+        }
+    }
     
     // DataSource methods
     
@@ -16,12 +22,39 @@ class ItemsViewController: UITableViewController {
         return 2
     }
     
+    //
+    func allShownItems() -> [Item] {
+        if showOnlyFavorites {
+            return itemStore.allItems.filter { item in
+                item.isFavorite
+            }
+        } else {
+            return itemStore.allItems
+        }
+    }
+    
+    func shownItems(itemsOverFifty show: Bool) -> [Item] {
+        let items = itemStore.itemsOverFifty(show)
+        var shownItems: [Item] = items
+        if showOnlyFavorites {
+            shownItems = items.filter { item in
+                return item.isFavorite
+            }
+        }
+        return shownItems
+    }
+    
+    func numberOfShownItems(itemsOverFifty show: Bool) -> Int {
+        return shownItems(itemsOverFifty: show).count
+    }
+    //
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return max(1, itemStore.itemsOverFifty(false).count)
+            return max(1, numberOfShownItems(itemsOverFifty: false))
         case 1:
-            return max(1, itemStore.itemsOverFifty(true).count)
+            return max(1, numberOfShownItems(itemsOverFifty: true))
         default:
             return 0
         }
@@ -43,7 +76,8 @@ class ItemsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         var contentConf = cell.defaultContentConfiguration()
-        if let item = itemStore.itemAt(indexPath) {
+        
+        if let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites) {
             
             if item.isFavorite {
                 contentConf.image = UIImage(systemName: "star.fill")
@@ -62,7 +96,7 @@ class ItemsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = itemStore.itemAt(indexPath)!
+            let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites)!
             if tableView.numberOfRows(inSection: indexPath.section) == 1 {
                 let updates: () -> Void = {
                     self.itemStore.deleteItem(item)
@@ -93,7 +127,7 @@ class ItemsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let handler: (UIContextualAction, UIView, @escaping (Bool) -> Void) -> Void = { action, sourceView, completionHandler in
-            let item = self.itemStore.itemAt(indexPath)
+            let item = self.itemStore.itemAt(indexPath, onlyFavorites: self.showOnlyFavorites)
             item?.isFavorite.toggle()
             tableView.reloadRows(at: [indexPath], with: .automatic)
             completionHandler(true)
@@ -143,5 +177,9 @@ class ItemsViewController: UITableViewController {
             sender.setTitle("Done", for: .focused)
             setEditing(true, animated: true)
         }
+    }
+    
+    @IBAction func OnlyFavoritesButton(_ sender: UIButton) {
+        showOnlyFavorites.toggle()
     }
 }

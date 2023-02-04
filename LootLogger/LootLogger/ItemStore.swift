@@ -78,25 +78,21 @@ extension ItemStore {
         let section = indexPath.section
         let row = indexPath.row
         var item: Item? = nil
-        if section == 0, itemsForSection(0).count > 0 {
-            if onlyFavorites {
-                let items = itemsForSection(0).filter { $0.isFavorite }
-                if items.count > 0 {
-                    item = items[row]
-                }
-
-            } else {
-                item = itemsForSection(0)[row]
+        if !itemsForSection(section).isEmpty {
+            item = getItemAtRow(row, section: section, onlyFavorites: onlyFavorites)
+        }
+        return item
+    }
+    
+    private func getItemAtRow(_ row: Int, section: Int, onlyFavorites: Bool) -> Item? {
+        var item: Item? = nil
+        if onlyFavorites {
+            let items = itemsForSection(section).filter { $0.isFavorite }
+            if items.count > 0 {
+                item = items[row]
             }
-        } else if section == 1, itemsForSection(1).count > 0 {
-            if onlyFavorites {
-                let items = itemsForSection(1).filter { $0.isFavorite }
-                if items.count > 0 {
-                    item = items[row]
-                }
-            } else {
-                item = itemsForSection(1)[row]
-            }
+        } else {
+            item = itemsForSection(section)[row]
         }
         return item
     }

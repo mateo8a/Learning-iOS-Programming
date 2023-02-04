@@ -22,31 +22,6 @@ class ItemsViewController: UITableViewController {
         return 2
     }
     
-    //
-    func allShownItems() -> [Item] {
-        if showOnlyFavorites {
-            return itemStore.onlyFavoriteItems
-        } else {
-            return itemStore.allItems
-        }
-    }
-    
-    func shownItems(forSection section: Int) -> [Item] {
-        let items = itemStore.itemsForSection(section)
-        var shownItems: [Item] = items
-        if showOnlyFavorites {
-            shownItems = items.filter { item in
-                return item.isFavorite
-            }
-        }
-        return shownItems
-    }
-    
-    func numberOfShownItems(forSection section: Int) -> Int {
-        return shownItems(forSection: section).count
-    }
-    //
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -86,6 +61,7 @@ class ItemsViewController: UITableViewController {
             cell.contentConfiguration = contentConf
         } else {
             contentConf.text = "No items"
+            
             cell.contentConfiguration = contentConf
         }
         
@@ -179,5 +155,28 @@ class ItemsViewController: UITableViewController {
     
     @IBAction func OnlyFavoritesButton(_ sender: UIButton) {
         showOnlyFavorites.toggle()
+    }
+    
+    private func allShownItems() -> [Item] {
+        if showOnlyFavorites {
+            return itemStore.onlyFavoriteItems
+        } else {
+            return itemStore.allItems
+        }
+    }
+    
+    private func shownItems(forSection section: Int) -> [Item] {
+        let sectionItems = itemStore.itemsForSection(section)
+        var shownItems: [Item] = sectionItems
+        if showOnlyFavorites {
+            shownItems = sectionItems.filter { item in
+                return item.isFavorite
+            }
+        }
+        return shownItems
+    }
+    
+    private func numberOfShownItems(forSection section: Int) -> Int {
+        return shownItems(forSection: section).count
     }
 }

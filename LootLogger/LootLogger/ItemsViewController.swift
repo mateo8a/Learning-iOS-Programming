@@ -45,6 +45,10 @@ class ItemsViewController: UITableViewController {
         var contentConf = cell.defaultContentConfiguration()
         if let item = itemStore.itemAt(indexPath) {
             
+            if item.isFavorite {
+                contentConf.image = UIImage(systemName: "star.fill")
+                contentConf.imageProperties.tintColor = .systemYellow
+            }
             contentConf.text = item.name
             contentConf.secondaryText = "$\(item.valueInDollars)"
             cell.contentConfiguration = contentConf
@@ -87,6 +91,19 @@ class ItemsViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let handler: (UIContextualAction, UIView, @escaping (Bool) -> Void) -> Void = { action, sourceView, completionHandler in
+            let item = self.itemStore.itemAt(indexPath)
+            item?.isFavorite.toggle()
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            completionHandler(true)
+        }
+        let favoriteAction = UIContextualAction(style: .normal, title: "Favorite", handler: handler)
+        favoriteAction.image = UIImage(systemName: "star.fill")
+        favoriteAction.backgroundColor = .systemYellow
+        return UISwipeActionsConfiguration(actions: [favoriteAction])
+    }
+    
     // Normal methods
     
     @IBAction func addNewItem(_ sender: UIButton) {
@@ -108,7 +125,7 @@ class ItemsViewController: UITableViewController {
         let indexPath = IndexPath(row: row, section: section)
         
         if onlyItem {
-            var updates: () -> Void = {
+            let updates: () -> Void = {
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 self.tableView.insertRows(at: [indexPath], with: .automatic)
             }

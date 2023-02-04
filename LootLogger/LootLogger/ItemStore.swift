@@ -9,6 +9,12 @@ import UIKit
 
 class ItemStore {
     var allItems = [Item]()
+    var onlyFavoriteItems: [Item] {
+        allItems.filter { item in
+            item.isFavorite
+        }
+    }
+
     
     init() {
         for _ in 0..<5 {
@@ -20,7 +26,7 @@ class ItemStore {
         let newItem = Item(random: true)
         allItems.append(newItem)
         // Add option to insert item at the top of the list
-//        allItems.insert(newItem, at: 0)
+        //        allItems.insert(newItem, at: 0)
         return newItem
     }
     
@@ -37,9 +43,9 @@ class ItemStore {
         let row = fromIndex.row
         let sectionItems: [Item]
         if fromIndex.section == 0 {
-            sectionItems = itemsOverFifty(false)
+            sectionItems = itemsForSection(0)
         } else {
-            sectionItems = itemsOverFifty(true)
+            sectionItems = itemsForSection(1)
         }
         
         let movedItem = sectionItems[row]
@@ -48,15 +54,20 @@ class ItemStore {
         let insertIndex = allItems.firstIndex(of: inFrontOfItem)!
         allItems.remove(at: removeIndex)
         allItems.insert(movedItem, at: insertIndex)
-//        print(allItems.map {"\($0.name): \($0.valueInDollars)"})
+        //        print(allItems.map {"\($0.name): \($0.valueInDollars)"})
     }
-    
-    func itemsOverFifty(_ show: Bool) -> [Item] {
+}
+
+// This extension is for methods that are to be used specifically by the implementation of the table in ItemsViewController
+extension ItemStore {
+    func itemsForSection(_ section: Int) -> [Item] {
         let itemsOverFifty = allItems.filter { item in
-            if show {
+            if section == 1 {
                 return item.valueInDollars > 50
-            } else {
+            } else if section == 0 {
                 return item.valueInDollars <= 50
+            } else {
+                return false
             }
         }
         
@@ -67,27 +78,27 @@ class ItemStore {
         let section = indexPath.section
         let row = indexPath.row
         var item: Item? = nil
-        if section == 0, itemsOverFifty(false).count > 0 {
+        if section == 0, itemsForSection(0).count > 0 {
             if onlyFavorites {
-                let items = itemsOverFifty(false).filter { $0.isFavorite }
+                let items = itemsForSection(0).filter { $0.isFavorite }
                 if items.count > 0 {
                     item = items[row]
                 }
 
             } else {
-                item = itemsOverFifty(false)[row]
+                item = itemsForSection(0)[row]
             }
-        } else if section == 1, itemsOverFifty(true).count > 0 {
+        } else if section == 1, itemsForSection(1).count > 0 {
             if onlyFavorites {
-                let items = itemsOverFifty(true).filter { $0.isFavorite }
+                let items = itemsForSection(1).filter { $0.isFavorite }
                 if items.count > 0 {
                     item = items[row]
                 }
-
             } else {
-                item = itemsOverFifty(true)[row]
+                item = itemsForSection(1)[row]
             }
         }
         return item
     }
+    
 }

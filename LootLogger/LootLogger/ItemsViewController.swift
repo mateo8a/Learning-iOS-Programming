@@ -25,16 +25,14 @@ class ItemsViewController: UITableViewController {
     //
     func allShownItems() -> [Item] {
         if showOnlyFavorites {
-            return itemStore.allItems.filter { item in
-                item.isFavorite
-            }
+            return itemStore.onlyFavoriteItems
         } else {
             return itemStore.allItems
         }
     }
     
-    func shownItems(itemsOverFifty show: Bool) -> [Item] {
-        let items = itemStore.itemsOverFifty(show)
+    func shownItems(forSection section: Int) -> [Item] {
+        let items = itemStore.itemsForSection(section)
         var shownItems: [Item] = items
         if showOnlyFavorites {
             shownItems = items.filter { item in
@@ -44,17 +42,17 @@ class ItemsViewController: UITableViewController {
         return shownItems
     }
     
-    func numberOfShownItems(itemsOverFifty show: Bool) -> Int {
-        return shownItems(itemsOverFifty: show).count
+    func numberOfShownItems(forSection section: Int) -> Int {
+        return shownItems(forSection: section).count
     }
     //
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return max(1, numberOfShownItems(itemsOverFifty: false))
+            return max(1, numberOfShownItems(forSection: 0))
         case 1:
-            return max(1, numberOfShownItems(itemsOverFifty: true))
+            return max(1, numberOfShownItems(forSection: 1))
         default:
             return 0
         }
@@ -146,12 +144,12 @@ class ItemsViewController: UITableViewController {
         let section: Int
         let onlyItem: Bool
         if newItem.valueInDollars <= 50 {
-            let items = itemStore.itemsOverFifty(false)
+            let items = itemStore.itemsForSection(0)
             row = items.firstIndex(of: newItem)!
             section = 0
             onlyItem = items.count == 1
         } else {
-            let items = itemStore.itemsOverFifty(true)
+            let items = itemStore.itemsForSection(1)
             row = items.firstIndex(of: newItem)!
             section = 1
             onlyItem = items.count == 1

@@ -25,9 +25,9 @@ class ItemsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return max(1, numberOfShownItems(forSection: 0))
+            return max(1, numberOfShownItemsForSection(0))
         case 1:
-            return max(1, numberOfShownItems(forSection: 1))
+            return max(1, numberOfShownItemsForSection(1))
         default:
             return 0
         }
@@ -90,7 +90,7 @@ class ItemsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        !shownItems(forSection: indexPath.section).isEmpty
+        !shownItemsForSection(indexPath.section).isEmpty
     }
     
     // Delegate methods
@@ -169,7 +169,7 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    private func shownItems(forSection section: Int) -> [Item] {
+    private func shownItemsForSection(_ section: Int) -> [Item] {
         let sectionItems = itemStore.itemsForSection(section)
         var shownItems: [Item] = sectionItems
         if showOnlyFavorites {
@@ -180,7 +180,7 @@ class ItemsViewController: UITableViewController {
         return shownItems
     }
     
-    private func numberOfShownItems(forSection section: Int) -> Int {
-        return shownItems(forSection: section).count
+    private func numberOfShownItemsForSection(_ section: Int) -> Int {
+        return shownItemsForSection(section).count
     }
 }

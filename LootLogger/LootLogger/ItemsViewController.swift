@@ -10,8 +10,21 @@ import UIKit
 class ItemsViewController: UITableViewController {
     var itemStore: ItemStore!
     
+    // DataSource methods
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return max(1, itemStore.itemsOverFifty(false).count)
+        case 1:
+            return max(1, itemStore.itemsOverFifty(true).count)
+        default:
+            return 0
+        }
     }
     
     override func tableView(_: UITableView, titleForHeaderInSection: Int) -> String? {
@@ -25,17 +38,6 @@ class ItemsViewController: UITableViewController {
             sectionTitle = ""
         }
         return sectionTitle
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return max(1, itemStore.itemsOverFifty(false).count)
-        case 1:
-            return max(1, itemStore.itemsOverFifty(true).count)
-        default:
-            return 0
-        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,6 +77,8 @@ class ItemsViewController: UITableViewController {
         itemStore.moveItem(from: sourceIndexPath, to: destinationIndexPath)
     }
     
+    // Delegate methods
+    
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if sourceIndexPath.section != proposedDestinationIndexPath.section {
             return sourceIndexPath
@@ -82,6 +86,8 @@ class ItemsViewController: UITableViewController {
             return proposedDestinationIndexPath
         }
     }
+    
+    // Normal methods
     
     @IBAction func addNewItem(_ sender: UIButton) {
         let newItem = itemStore.createItem()

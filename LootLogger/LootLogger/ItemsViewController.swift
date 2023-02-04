@@ -89,6 +89,10 @@ class ItemsViewController: UITableViewController {
         itemStore.moveItem(from: sourceIndexPath, to: destinationIndexPath)
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        !shownItems(forSection: indexPath.section).isEmpty
+    }
+    
     // Delegate methods
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {

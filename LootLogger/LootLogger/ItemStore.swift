@@ -9,6 +9,12 @@ import UIKit
 
 class ItemStore {
     var allItems = [Item]()
+    var onlyFavoriteItems: [Item] {
+        allItems.filter { item in
+            item.isFavorite
+        }
+    }
+
     
     init() {
         for _ in 0..<5 {
@@ -20,7 +26,7 @@ class ItemStore {
         let newItem = Item(random: true)
         allItems.append(newItem)
         // Add option to insert item at the top of the list
-//        allItems.insert(newItem, at: 0)
+        //        allItems.insert(newItem, at: 0)
         return newItem
     }
     
@@ -30,12 +36,65 @@ class ItemStore {
         }
     }
     
-    func moveItem(from fromIndex: Int, to toIndex: Int) {
+    func moveItem(from fromIndex: IndexPath, to toIndex: IndexPath) {
         if fromIndex == toIndex { return }
+        if fromIndex.section != toIndex.section { return }
         
-        let movedItem = allItems[fromIndex]
-        allItems.remove(at: fromIndex)
-        allItems.insert(movedItem, at: toIndex)
-        allItems[toIndex] = movedItem
+        let row = fromIndex.row
+        let sectionItems: [Item]
+        if fromIndex.section == 0 {
+            sectionItems = itemsForSection(0)
+        } else {
+            sectionItems = itemsForSection(1)
+        }
+        
+        let movedItem = sectionItems[row]
+        let removeIndex = allItems.firstIndex(of: movedItem)!
+        let inFrontOfItem = sectionItems[toIndex.row]
+        let insertIndex = allItems.firstIndex(of: inFrontOfItem)!
+        allItems.remove(at: removeIndex)
+        allItems.insert(movedItem, at: insertIndex)
+        //        print(allItems.map {"\($0.name): \($0.valueInDollars)"})
     }
+}
+
+// This extension is for methods that are to be used specifically by the implementation of the table in ItemsViewController
+extension ItemStore {
+    func itemsForSection(_ section: Int) -> [Item] {
+        let itemsOverFifty = allItems.filter { item in
+            if section == 1 {
+                return item.valueInDollars > 50
+            } else if section == 0 {
+                return item.valueInDollars <= 50
+            } else {
+                return false
+            }
+        }
+        
+        return itemsOverFifty
+    }
+    
+    func itemAt(_ indexPath: IndexPath, onlyFavorites: Bool) -> Item? {
+        let section = indexPath.section
+        let row = indexPath.row
+        var item: Item? = nil
+        if !itemsForSection(section).isEmpty {
+            item = getItemAtRow(row, section: section, onlyFavorites: onlyFavorites)
+        }
+        return item
+    }
+    
+    private func getItemAtRow(_ row: Int, section: Int, onlyFavorites: Bool) -> Item? {
+        var item: Item? = nil
+        if onlyFavorites {
+            let items = itemsForSection(section).filter { $0.isFavorite }
+            if items.count > 0 {
+                item = items[row]
+            }
+        } else {
+            item = itemsForSection(section)[row]
+        }
+        return item
+    }
+    
 }

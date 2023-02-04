@@ -20,7 +20,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y1h-2e-WrK">
-                                    <rect key="frame" x="8" y="4.6666666666666679" width="184.66666666666666" height="35"/>
+                                    <rect key="frame" x="8.0000000000000071" y="4.6666666666666679" width="112.66666666666669" height="35"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" title="Edit"/>
                                     <connections>
@@ -28,11 +28,19 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Lc-pP-CYY">
-                                    <rect key="frame" x="200.66666666666663" y="4.6666666666666679" width="184.33333333333337" height="35"/>
+                                    <rect key="frame" x="272.33333333333331" y="4.6666666666666679" width="112.66666666666669" height="35"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" title="Add"/>
                                     <connections>
                                         <action selector="addNewItem:" destination="0sY-qe-bV3" eventType="touchUpInside" id="MNg-Ar-iIv"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETh-1a-UDx">
+                                    <rect key="frame" x="128.66666666666669" y="4.6666666666666679" width="135.66666666666669" height="35"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Favorites Only"/>
+                                    <connections>
+                                        <action selector="OnlyFavoritesButton:" destination="0sY-qe-bV3" eventType="touchUpInside" id="LKq-pZ-pHd"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -40,9 +48,12 @@
                             <constraints>
                                 <constraint firstItem="Y1h-2e-WrK" firstAttribute="centerY" secondItem="RQw-Gb-i9Q" secondAttribute="centerY" id="2X9-9D-ZyK"/>
                                 <constraint firstAttribute="trailing" secondItem="8Lc-pP-CYY" secondAttribute="trailing" constant="8" id="Fsq-6J-Ci0"/>
+                                <constraint firstItem="ETh-1a-UDx" firstAttribute="centerY" secondItem="RQw-Gb-i9Q" secondAttribute="centerY" id="Qgz-Ww-lDm"/>
                                 <constraint firstItem="Y1h-2e-WrK" firstAttribute="leading" secondItem="RQw-Gb-i9Q" secondAttribute="leading" constant="8" id="Qtm-od-BQP"/>
-                                <constraint firstItem="8Lc-pP-CYY" firstAttribute="leading" secondItem="Y1h-2e-WrK" secondAttribute="trailing" constant="8" id="UJ2-j2-SRm"/>
-                                <constraint firstItem="8Lc-pP-CYY" firstAttribute="width" secondItem="Y1h-2e-WrK" secondAttribute="width" id="hXP-yU-Z1l"/>
+                                <constraint firstItem="8Lc-pP-CYY" firstAttribute="width" secondItem="Y1h-2e-WrK" secondAttribute="width" id="Ytm-tE-Lxj"/>
+                                <constraint firstItem="8Lc-pP-CYY" firstAttribute="leading" secondItem="ETh-1a-UDx" secondAttribute="trailing" constant="8" id="bjV-dD-Zd3"/>
+                                <constraint firstItem="ETh-1a-UDx" firstAttribute="leading" secondItem="Y1h-2e-WrK" secondAttribute="trailing" constant="8" id="sc8-yc-n1r"/>
+                                <constraint firstItem="ETh-1a-UDx" firstAttribute="width" secondItem="Y1h-2e-WrK" secondAttribute="width" multiplier="1.2" id="vaR-3u-iYQ"/>
                                 <constraint firstItem="8Lc-pP-CYY" firstAttribute="centerY" secondItem="RQw-Gb-i9Q" secondAttribute="centerY" id="vhb-GO-GNM"/>
                             </constraints>
                         </view>

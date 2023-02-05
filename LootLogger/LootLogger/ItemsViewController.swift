@@ -11,11 +11,16 @@ class ItemsViewController: UITableViewController {
     var itemStore: ItemStore!
     var showOnlyFavorites: Bool = false {
         didSet {
-            let tableView = view as! UITableView
             tableView.reloadData()
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 65
+        print(view.safeAreaLayoutGuide)
+    }
     // DataSource methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -47,22 +52,24 @@ class ItemsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        var contentConf = cell.defaultContentConfiguration()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         
         if let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites) {
             
             if item.isFavorite {
-                contentConf.image = UIImage(systemName: "star.fill")
-                contentConf.imageProperties.tintColor = .systemYellow
+                cell.favoriteIcon.image = UIImage(systemName: "star.fill")
+                cell.favoriteIcon.tintColor = .systemYellow
+            } else {
+                cell.favoriteIcon.image = nil
             }
-            contentConf.text = item.name
-            contentConf.secondaryText = "$\(item.valueInDollars)"
-            cell.contentConfiguration = contentConf
+            cell.nameLabel.text = item.name
+            cell.valueLabel.text = "$\(item.valueInDollars)"
+            cell.serialNumberLabel.text = item.serialNumber
         } else {
-            contentConf.text = "No items"
-            
-            cell.contentConfiguration = contentConf
+            cell.favoriteIcon.image = nil
+            cell.nameLabel.text = "No items"
+            cell.valueLabel.text = ""
+            cell.serialNumberLabel.text = ""
         }
         
         return cell

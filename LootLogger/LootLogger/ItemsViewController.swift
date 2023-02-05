@@ -15,7 +15,7 @@ class ItemsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
         let item = itemStore.allItems[indexPath.row]
         
         var contentConf = cell.defaultContentConfiguration()

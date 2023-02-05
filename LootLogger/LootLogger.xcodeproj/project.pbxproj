@@ -18,6 +18,7 @@
 		A2554A8B2988125400DFFF38 /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2554A8A2988125400DFFF38 /* ItemsViewController.swift */; };
 		A2554A8D2988199E00DFFF38 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2554A8C2988199E00DFFF38 /* Item.swift */; };
 		A2554A8F29881D7D00DFFF38 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2554A8E29881D7D00DFFF38 /* ItemStore.swift */; };
+		A2A7895429901D4800657300 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7895329901D4800657300 /* ItemCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		A2554A8A2988125400DFFF38 /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		A2554A8C2988199E00DFFF38 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A2554A8E29881D7D00DFFF38 /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
+		A2A7895329901D4800657300 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				A2554A5A2981674B00DFFF38 /* AppDelegate.swift */,
 				A2554A5C2981674B00DFFF38 /* SceneDelegate.swift */,
 				A2554A8A2988125400DFFF38 /* ItemsViewController.swift */,
+				A2A7895329901D4800657300 /* ItemCell.swift */,
 				A2554A8C2988199E00DFFF38 /* Item.swift */,
 				A2554A8E29881D7D00DFFF38 /* ItemStore.swift */,
 				A2554A602981674B00DFFF38 /* Main.storyboard */,
@@ -266,6 +269,7 @@
 			files = (
 				A2554A8D2988199E00DFFF38 /* Item.swift in Sources */,
 				A2554A8B2988125400DFFF38 /* ItemsViewController.swift in Sources */,
+				A2A7895429901D4800657300 /* ItemCell.swift in Sources */,
 				A2554A5B2981674B00DFFF38 /* AppDelegate.swift in Sources */,
 				A2554A8F29881D7D00DFFF38 /* ItemStore.swift in Sources */,
 				A2554A5D2981674B00DFFF38 /* SceneDelegate.swift in Sources */,

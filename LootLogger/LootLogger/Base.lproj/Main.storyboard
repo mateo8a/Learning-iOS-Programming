@@ -34,27 +34,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="RQw-Gb-i9Q" userLabel="TableHeader">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETh-1a-UDx">
-                                    <rect key="frame" x="126" y="4.6666666666666679" width="132" height="35"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Favorites Only"/>
-                                    <connections>
-                                        <action selector="OnlyFavoritesButton:" destination="0sY-qe-bV3" eventType="touchUpInside" id="LKq-pZ-pHd"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="ETh-1a-UDx" firstAttribute="centerY" secondItem="RQw-Gb-i9Q" secondAttribute="centerY" id="Qgz-Ww-lDm"/>
-                            </constraints>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="65" id="fZP-hl-enh" customClass="ItemCell" customModule="LootLogger" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="94" width="393" height="65"/>
+                                <rect key="frame" x="0.0" y="50" width="393" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fZP-hl-enh" id="BdX-d0-kBh">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
@@ -116,11 +98,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="LootLogger" id="lix-uS-bNi">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Rnu-fa-qGo">
-                            <connections>
-                                <action selector="addNewItem:" destination="0sY-qe-bV3" id="GMF-zZ-f8R"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Rnu-fa-qGo">
+                                <connections>
+                                    <action selector="addNewItem:" destination="0sY-qe-bV3" id="GMF-zZ-f8R"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="star.square.on.square.fill" catalog="system" id="jPV-3n-rI7">
+                                <connections>
+                                    <action selector="OnlyFavoritesButton:" destination="0sY-qe-bV3" id="stL-iU-w0A"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kc-rn-smy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -243,6 +232,7 @@ Cg
         </scene>
     </scenes>
     <resources>
+        <image name="star.square.on.square.fill" catalog="system" width="128" height="116"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

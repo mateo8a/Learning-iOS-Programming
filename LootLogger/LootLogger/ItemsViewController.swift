@@ -180,7 +180,7 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    @IBAction func OnlyFavoritesButton(_ sender: UIButton) {
+    @IBAction func OnlyFavoritesButton(_ sender: UIBarButtonItem) {
         showOnlyFavorites.toggle()
     }
     

@@ -19,6 +19,7 @@
 		A2554A8D2988199E00DFFF38 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2554A8C2988199E00DFFF38 /* Item.swift */; };
 		A2554A8F29881D7D00DFFF38 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2554A8E29881D7D00DFFF38 /* ItemStore.swift */; };
 		A2A7895429901D4800657300 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7895329901D4800657300 /* ItemCell.swift */; };
+		A2F979DE2991593D00881A79 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F979DD2991593D00881A79 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		A2554A8C2988199E00DFFF38 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A2554A8E29881D7D00DFFF38 /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		A2A7895329901D4800657300 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		A2F979DD2991593D00881A79 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				A2554A8C2988199E00DFFF38 /* Item.swift */,
 				A2554A8E29881D7D00DFFF38 /* ItemStore.swift */,
 				A2554A602981674B00DFFF38 /* Main.storyboard */,
+				A2F979DD2991593D00881A79 /* DetailViewController.swift */,
 				A2554A632981674E00DFFF38 /* Assets.xcassets */,
 				A2554A652981674E00DFFF38 /* LaunchScreen.storyboard */,
 				A2554A682981674E00DFFF38 /* Info.plist */,
@@ -273,6 +276,7 @@
 				A2554A5B2981674B00DFFF38 /* AppDelegate.swift in Sources */,
 				A2554A8F29881D7D00DFFF38 /* ItemStore.swift in Sources */,
 				A2554A5D2981674B00DFFF38 /* SceneDelegate.swift in Sources */,
+				A2F979DE2991593D00881A79 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

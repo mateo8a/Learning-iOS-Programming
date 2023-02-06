@@ -20,6 +20,20 @@ class ItemsViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 65
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showItem":
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites)
+                let destination = segue.destination as! DetailViewController
+                destination.item = item
+            }
+        default:
+            preconditionFailure("Unexpected segue identifier.")
+        }
+    }
+    
     // DataSource methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {

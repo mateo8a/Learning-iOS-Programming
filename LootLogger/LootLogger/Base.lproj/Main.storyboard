@@ -8,16 +8,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="PDq-eU-Jvb">
             <objects>
-                <viewController id="beM-Y6-JPk" sceneMemberID="viewController">
+                <viewController id="beM-Y6-JPk" customClass="DetailViewController" customModule="LootLogger" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3iG-IE-s7T">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6I4-0b-gZ5">
-                                <rect key="frame" x="0.0" y="67" width="393" height="743"/>
+                                <rect key="frame" x="0.0" y="67" width="393" height="708"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PEw-XZ-y0o">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="34"/>
@@ -30,6 +30,9 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="51J-aG-jYE">
                                                 <rect key="frame" x="53" y="0.0" width="340" height="34"/>
+                                                <string key="text" base64-UTF8="YES">
+Cg
+</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
@@ -68,7 +71,7 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5H-eN-8gR">
-                                        <rect key="frame" x="0.0" y="126" width="393" height="617"/>
+                                        <rect key="frame" x="0.0" y="126" width="393" height="582"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -89,6 +92,13 @@
                             <constraint firstItem="hWv-Yl-2Ni" firstAttribute="trailing" secondItem="6I4-0b-gZ5" secondAttribute="trailing" id="rZe-6g-g1I"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="xQd-qA-Gw2"/>
+                    <connections>
+                        <outlet property="dateLabel" destination="q5H-eN-8gR" id="c7X-eM-09O"/>
+                        <outlet property="nameField" destination="51J-aG-jYE" id="O7H-4k-D5B"/>
+                        <outlet property="serialNumberField" destination="ct6-Sx-RG3" id="Wxk-d8-EIf"/>
+                        <outlet property="valueField" destination="ZUk-Pw-2HL" id="6A4-iv-Qax"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YXJ-BL-nVh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -198,6 +208,7 @@
                                     <outlet property="nameLabel" destination="Ujk-hU-fQe" id="A7t-3U-FKL"/>
                                     <outlet property="serialNumberLabel" destination="swg-RP-kxU" id="gdx-zI-8kz"/>
                                     <outlet property="valueLabel" destination="uB5-ZL-6kM" id="LBL-w2-naA"/>
+                                    <segue destination="beM-Y6-JPk" kind="show" identifier="showItem" id="5Ar-7t-8LF"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

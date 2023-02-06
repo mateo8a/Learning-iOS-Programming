@@ -172,6 +172,9 @@ Cg
 </string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="beM-Y6-JPk" id="44p-Si-FXt"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -188,6 +191,9 @@ Cg
                                                 <rect key="frame" x="53" y="0.0" width="340" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="beM-Y6-JPk" id="XZs-8O-Dfi"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -204,6 +210,9 @@ Cg
                                                 <rect key="frame" x="53" y="0.0" width="340" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="beM-Y6-JPk" id="SL2-vO-2fQ"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -222,14 +231,18 @@ Cg
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hWv-Yl-2Ni"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6I4-0b-gZ5" firstAttribute="leading" secondItem="hWv-Yl-2Ni" secondAttribute="leading" id="0Rm-nC-6XK"/>
                             <constraint firstItem="hWv-Yl-2Ni" firstAttribute="bottom" secondItem="6I4-0b-gZ5" secondAttribute="bottom" constant="8" id="SnO-HT-I6R"/>
                             <constraint firstItem="6I4-0b-gZ5" firstAttribute="top" secondItem="hWv-Yl-2Ni" secondAttribute="top" constant="8" id="Vjb-I8-5BS"/>
                             <constraint firstItem="hWv-Yl-2Ni" firstAttribute="trailing" secondItem="6I4-0b-gZ5" secondAttribute="trailing" id="rZe-6g-g1I"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="GQt-ee-cR0" appends="YES" id="1A4-SL-LTA"/>
+                        </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="xQd-qA-Gw2"/>
+                    <navigationItem key="navigationItem" customizationIdentifier="" id="xQd-qA-Gw2"/>
                     <connections>
                         <outlet property="dateLabel" destination="q5H-eN-8gR" id="c7X-eM-09O"/>
                         <outlet property="nameField" destination="51J-aG-jYE" id="O7H-4k-D5B"/>
@@ -238,6 +251,11 @@ Cg
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YXJ-BL-nVh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="GQt-ee-cR0">
+                    <connections>
+                        <action selector="backgroundTapped:" destination="beM-Y6-JPk" id="gn5-5Q-xNb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1220.6106870229007" y="-30.281690140845072"/>
         </scene>

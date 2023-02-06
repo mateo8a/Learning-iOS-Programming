@@ -38,24 +38,8 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y1h-2e-WrK">
-                                    <rect key="frame" x="8.0000000000000071" y="4.6666666666666679" width="112.66666666666669" height="35"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Edit"/>
-                                    <connections>
-                                        <action selector="toggleEditingMode:" destination="0sY-qe-bV3" eventType="touchUpInside" id="VEf-3j-bHw"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Lc-pP-CYY">
-                                    <rect key="frame" x="272.33333333333331" y="4.6666666666666679" width="112.66666666666669" height="35"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Add"/>
-                                    <connections>
-                                        <action selector="addNewItem:" destination="0sY-qe-bV3" eventType="touchUpInside" id="MNg-Ar-iIv"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETh-1a-UDx">
-                                    <rect key="frame" x="128.66666666666669" y="4.6666666666666679" width="135.66666666666669" height="35"/>
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETh-1a-UDx">
+                                    <rect key="frame" x="126" y="4.6666666666666679" width="132" height="35"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" title="Favorites Only"/>
                                     <connections>
@@ -65,15 +49,7 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstItem="Y1h-2e-WrK" firstAttribute="centerY" secondItem="RQw-Gb-i9Q" secondAttribute="centerY" id="2X9-9D-ZyK"/>
-                                <constraint firstAttribute="trailing" secondItem="8Lc-pP-CYY" secondAttribute="trailing" constant="8" id="Fsq-6J-Ci0"/>
                                 <constraint firstItem="ETh-1a-UDx" firstAttribute="centerY" secondItem="RQw-Gb-i9Q" secondAttribute="centerY" id="Qgz-Ww-lDm"/>
-                                <constraint firstItem="Y1h-2e-WrK" firstAttribute="leading" secondItem="RQw-Gb-i9Q" secondAttribute="leading" constant="8" id="Qtm-od-BQP"/>
-                                <constraint firstItem="8Lc-pP-CYY" firstAttribute="width" secondItem="Y1h-2e-WrK" secondAttribute="width" id="Ytm-tE-Lxj"/>
-                                <constraint firstItem="8Lc-pP-CYY" firstAttribute="leading" secondItem="ETh-1a-UDx" secondAttribute="trailing" constant="8" id="bjV-dD-Zd3"/>
-                                <constraint firstItem="ETh-1a-UDx" firstAttribute="leading" secondItem="Y1h-2e-WrK" secondAttribute="trailing" constant="8" id="sc8-yc-n1r"/>
-                                <constraint firstItem="ETh-1a-UDx" firstAttribute="width" secondItem="Y1h-2e-WrK" secondAttribute="width" multiplier="1.2" id="vaR-3u-iYQ"/>
-                                <constraint firstItem="8Lc-pP-CYY" firstAttribute="centerY" secondItem="RQw-Gb-i9Q" secondAttribute="centerY" id="vhb-GO-GNM"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -139,7 +115,13 @@
                             <outlet property="delegate" destination="0sY-qe-bV3" id="Qyn-51-caI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="LootLogger" id="lix-uS-bNi"/>
+                    <navigationItem key="navigationItem" title="LootLogger" id="lix-uS-bNi">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Rnu-fa-qGo">
+                            <connections>
+                                <action selector="addNewItem:" destination="0sY-qe-bV3" id="GMF-zZ-f8R"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kc-rn-smy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

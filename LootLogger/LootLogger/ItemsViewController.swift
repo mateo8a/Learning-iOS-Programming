@@ -15,6 +15,8 @@ class ItemsViewController: UITableViewController {
         }
     }
     
+    // View Controller methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableView.automaticDimension
@@ -32,6 +34,12 @@ class ItemsViewController: UITableViewController {
         default:
             preconditionFailure("Unexpected segue identifier.")
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
     }
     
     // DataSource methods

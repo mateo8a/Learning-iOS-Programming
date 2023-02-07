@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ItemStore {
     var allItems = [Item]()
@@ -14,16 +15,28 @@ class ItemStore {
             item.isFavorite
         }
     }
+    let itemArchiveURL: URL = {
+        let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentDirectories.first!
+        return documentDirectory.appending(path: "items.plist")
+    }()
 
     
     init() {
-        for _ in 0..<5 {
-            createItem()
+        do {
+            let data = try Data(contentsOf: itemArchiveURL)
+            let decoder = PropertyListDecoder()
+            let items = try decoder.decode([Item].self, from: data)
+            allItems = items
+        } catch {
+            print("Error reading in saved items: \(error)")
         }
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(saveChanges), name: UIScene.didEnterBackgroundNotification, object: nil)
     }
     
-    @discardableResult func createItem() -> Item {
-        let newItem = Item(random: true)
+    @discardableResult func createItem(_ item: Item?) -> Item {
+        let newItem = Item(item, random: true)
         allItems.append(newItem)
         // Add option to insert item at the top of the list
         //        allItems.insert(newItem, at: 0)
@@ -55,6 +68,19 @@ class ItemStore {
         allItems.remove(at: removeIndex)
         allItems.insert(movedItem, at: insertIndex)
         //        print(allItems.map {"\($0.name): \($0.valueInDollars)"})
+    }
+    
+    @objc func saveChanges() -> Bool {
+        print("Saving items at \(itemArchiveURL)")
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(allItems)
+            try data.write(to: itemArchiveURL, options: .atomic)
+            return true
+        } catch let saveError {
+            print("Saving failed with error: \(saveError)")
+            return false
+        }
     }
 }
 

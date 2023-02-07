@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Item: Equatable {
+class Item: Equatable, Codable {
     
     var name: String
     var valueInDollars: Int
@@ -15,11 +15,19 @@ class Item: Equatable {
     var dateCreated: Date
     var isFavorite: Bool = false
     
-    init(name: String, serialNumber: String?, valueInDollars: Int) {
+    init(name: String, serialNumber: String?, valueInDollars: Int, dateCreated: Date = Date()) {
         self.name = name
         self.valueInDollars = valueInDollars
         self.serialNumber = serialNumber
-        self.dateCreated = Date()
+        self.dateCreated = dateCreated
+    }
+    
+    convenience init(_ item: Item?, random: Bool) {
+        if let item = item {
+            self.init(name: item.name, serialNumber: item.serialNumber, valueInDollars: item.valueInDollars, dateCreated: item.dateCreated)
+        } else {
+            self.init(random: random)
+        }
     }
     
     convenience init(random: Bool = false) {

@@ -40,6 +40,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         
         view.endEditing(true)
         
+        let oldItem = Item(item!, random: true)
+        
         item.name = nameField.text ?? ""
         item.serialNumber = serialNumberField.text
         if let value = valueField.text {
@@ -47,6 +49,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         } else {
             item.valueInDollars = 0
         }
+        
+        let userInfo = ["oldItem" : oldItem, "modifiedItem" : item!]
+        let notification = Notification(name: Notification.Name("modifiedItem"), object: self, userInfo: userInfo)
+        NotificationCenter.default.post(notification)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

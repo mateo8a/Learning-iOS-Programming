@@ -25,6 +25,8 @@ class ItemsViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewItem(_:)), name: Notification.Name("newItem"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDeletedItem(_:)), name: Notification.Name("deletedItem"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFavoritedItem(_:)), name: Notification.Name("favoritedItem"), object: nil)
     }
     
     @objc func handleNewItem(_ notification: Notification) {
@@ -33,6 +35,41 @@ class ItemsViewController: UITableViewController {
             itemStore.createItem(newItem)
             addNewRow(newItem)
         }
+    }
+    
+    @objc func handleDeletedItem(_ notification: Notification) {
+        let userInfo = notification.userInfo!
+        let deletedItem = userInfo["deletedItem"] as! Item
+        let indexPath = userInfo["indexPath"] as! IndexPath
+        if itemStore.allItems.contains([deletedItem]) {
+            deleteRow(item: deletedItem, indexPath: indexPath)
+        }
+    }
+    
+    @objc func handleFavoritedItem(_ notification: Notification) {
+        let userInfo = notification.userInfo!
+        let favoritedItem = userInfo["favoritedItem"] as! Item
+        let ownedItem = itemStore.allItems.first { item in
+            item == favoritedItem
+        }
+        if ownedItem?.isFavorite != favoritedItem.isFavorite {
+            let indexPath = indexPathOf(ownedItem!)
+            ownedItem?.isFavorite.toggle()
+            modifyFavoriteRows(indexPath: indexPath)
+        }
+    }
+    
+    func indexPathOf(_ item: Item) -> IndexPath {
+        let section = item.valueInDollars <= 50 ? 0 : 1
+        let row: Int
+        if showOnlyFavorites {
+            let sectionItems = itemStore.itemsForSection(section)
+            let favoriteItems = sectionItems.filter { $0.isFavorite }
+            row = favoriteItems.firstIndex(of: item)!
+        } else {
+            row = itemStore.itemsForSection(section).firstIndex(of: item)!
+        }
+        return IndexPath(row: row, section: section)
     }
     
     override func viewDidLoad() {
@@ -138,15 +175,6 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    @objc func handleDeletedItem(_ notification: Notification) {
-        let userInfo = notification.userInfo!
-        let deletedItem = userInfo["deletedItem"] as! Item
-        let indexPath = userInfo["indexPath"] as! IndexPath
-        if itemStore.allItems.contains([deletedItem]) {
-            deleteRow(item: deletedItem, indexPath: indexPath)
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         itemStore.moveItem(from: sourceIndexPath, to: destinationIndexPath)
     }
@@ -169,21 +197,30 @@ class ItemsViewController: UITableViewController {
         let handler: (UIContextualAction, UIView, @escaping (Bool) -> Void) -> Void = { action, sourceView, completionHandler in
             let item = self.itemStore.itemAt(indexPath, onlyFavorites: self.showOnlyFavorites)
             item?.isFavorite.toggle()
-            if self.showOnlyFavorites {
-                if self.shownItemsForSection(indexPath.section).count >= 1 {
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                } else {
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
-                }
-            } else {
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
+            self.modifyFavoriteRows(indexPath: indexPath)
+            
+            let userInfo: [String : Any] = ["favoritedItem" : item!, "indexPath" : indexPath]
+            let notification = Notification(name: Notification.Name("favoritedItem"), object: self, userInfo: userInfo)
+            NotificationCenter.default.post(notification)
+            
             completionHandler(true)
         }
         let favoriteAction = UIContextualAction(style: .normal, title: "Favorite", handler: handler)
         favoriteAction.image = UIImage(systemName: "star.fill")
         favoriteAction.backgroundColor = .systemYellow
         return UISwipeActionsConfiguration(actions: [favoriteAction])
+    }
+    
+    func modifyFavoriteRows(indexPath: IndexPath) {
+        if self.showOnlyFavorites {
+            if self.shownItemsForSection(indexPath.section).count >= 1 {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            } else {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        } else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
     
     // Normal methods

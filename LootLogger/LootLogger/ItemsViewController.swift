@@ -23,6 +23,8 @@ class ItemsViewController: UITableViewController {
         navigationItem.backButtonTitle = "Backkk"
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewItem(_:)), name: Notification.Name("newItem"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDeletedItem(_:)), name: Notification.Name("deletedItem"), object: nil)
     }
     
     @objc func handleNewItem(_ notification: Notification) {
@@ -115,17 +117,33 @@ class ItemsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites)!
-            if tableView.numberOfRows(inSection: indexPath.section) == 1 {
-                let updates: () -> Void = {
-                    self.itemStore.deleteItem(item)
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                    tableView.insertRows(at: [indexPath], with: .automatic)
-                }
-                tableView.performBatchUpdates(updates)
-            } else {
-                itemStore.deleteItem(item)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+            deleteRow(item: item, indexPath: indexPath)
+            let userInfo: [String : Any] = ["deletedItem" : item, "indexPath" : indexPath]
+            let notification = Notification(name: Notification.Name("deletedItem"), object: self, userInfo: userInfo)
+            NotificationCenter.default.post(notification)
+        }
+    }
+    
+    func deleteRow(item: Item, indexPath: IndexPath) {
+        if tableView.numberOfRows(inSection: indexPath.section) == 1 {
+            let updates: () -> Void = {
+                self.itemStore.deleteItem(item)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.tableView.insertRows(at: [indexPath], with: .automatic)
             }
+            tableView.performBatchUpdates(updates)
+        } else {
+            itemStore.deleteItem(item)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    @objc func handleDeletedItem(_ notification: Notification) {
+        let userInfo = notification.userInfo!
+        let deletedItem = userInfo["deletedItem"] as! Item
+        let indexPath = userInfo["indexPath"] as! IndexPath
+        if itemStore.allItems.contains([deletedItem]) {
+            deleteRow(item: deletedItem, indexPath: indexPath)
         }
     }
     

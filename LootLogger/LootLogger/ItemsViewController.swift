@@ -20,6 +20,7 @@ class ItemsViewController: UITableViewController {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.backButtonTitle = "Backkk"
     }
     
     override func viewDidLoad() {

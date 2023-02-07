@@ -180,19 +180,38 @@ Cg
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZUk-Pw-2HL">
                                                 <rect key="frame" x="53" y="0.0" width="340" height="34"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="beM-Y6-JPk" id="SL2-vO-2fQ"/>
                                                 </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5H-eN-8gR">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="A08-zD-Lf8">
                                         <rect key="frame" x="0.0" y="126" width="393" height="573"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" placeholderIntrinsicWidth="393" placeholderIntrinsicHeight="538.66666666666663" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5H-eN-8gR">
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="538"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="538" id="QxS-DE-igk"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iwp-9p-TyD">
+                                                <rect key="frame" x="0.0" y="538" width="393" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="NMO-M4-StL"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Change Date Created"/>
+                                                <connections>
+                                                    <segue destination="G45-vE-Lnf" kind="show" identifier="dateChanger" id="qzF-Cq-ejW"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ct6-Sx-RG3" firstAttribute="leading" secondItem="ZUk-Pw-2HL" secondAttribute="leading" id="OsD-Jf-Uhq"/>
@@ -229,6 +248,47 @@ Cg
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1220.6106870229007" y="-30.281690140845072"/>
+        </scene>
+        <!--Date Change Controller-->
+        <scene sceneID="dAz-Co-OHU">
+            <objects>
+                <viewController id="G45-vE-Lnf" customClass="DateChangeController" customModule="LootLogger" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qCT-CL-JRy">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="JDz-h7-0rM">
+                                <rect key="frame" x="0.0" y="135" width="393" height="92.333333333333314"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="T" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9A-2A-egI">
+                                        <rect key="frame" x="191.33333333333334" y="0.0" width="10.666666666666657" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="FoY-z5-51E">
+                                        <rect key="frame" x="0.0" y="42" width="393" height="50"/>
+                                    </datePicker>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="poE-n2-V0L"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JDz-h7-0rM" firstAttribute="top" secondItem="poE-n2-V0L" secondAttribute="top" constant="32" id="5TQ-vc-bI8"/>
+                            <constraint firstItem="JDz-h7-0rM" firstAttribute="leading" secondItem="qCT-CL-JRy" secondAttribute="leading" id="DFO-Ac-41j"/>
+                            <constraint firstItem="poE-n2-V0L" firstAttribute="trailing" secondItem="JDz-h7-0rM" secondAttribute="trailing" id="t4g-W4-QYC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="FgF-Vb-PDV"/>
+                    <connections>
+                        <outlet property="datePicker" destination="FoY-z5-51E" id="tGX-rC-NB1"/>
+                        <outlet property="descriptionLabel" destination="B9A-2A-egI" id="k8E-qC-iE2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Shk-SS-C6w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2017.5572519083969" y="-30.281690140845072"/>
         </scene>
     </scenes>
     <resources>

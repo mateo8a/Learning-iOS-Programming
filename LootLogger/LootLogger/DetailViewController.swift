@@ -20,6 +20,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
     var item: Item! {
         didSet {
             navigationItem.title = item.name
+            navigationItem.backButtonTitle = item.name
         }
     }
     
@@ -48,11 +49,23 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "dateChanger":
+            let destination = segue.destination as! DateChangeController
+            destination.item = item
+        default:
+            preconditionFailure("Unexpected segue identifier.")
+        }
+    }
+    
     // Text Field delegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
+    
+    // Normal methods
     
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()

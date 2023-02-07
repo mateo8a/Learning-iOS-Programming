@@ -31,18 +31,6 @@ class ItemsViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleModifiedItem(_:)), name: Notification.Name("modifiedItem"), object: nil)
     }
     
-    @objc func handleModifiedItem(_ notification: Notification) {
-        let oldItem = notification.userInfo!["oldItem"] as! Item
-        let newItem = notification.userInfo!["modifiedItem"] as! Item
-        if let modifiedItem = itemStore.allItems.first(where: {$0 == oldItem}) {
-            modifiedItem.name = newItem.name
-            modifiedItem.serialNumber = newItem.serialNumber
-            modifiedItem.valueInDollars = newItem.valueInDollars
-            modifiedItem.dateCreated = newItem.dateCreated
-            tableView.reloadRows(at: [indexPathOf(modifiedItem)], with: .automatic)
-        }
-    }
-    
     func indexPathOf(_ item: Item) -> IndexPath {
         let section = item.valueInDollars <= 50 ? 0 : 1
         let row: Int
@@ -302,10 +290,22 @@ class ItemsViewController: UITableViewController {
         let ownedItem = itemStore.allItems.first { item in
             item == favoritedItem
         }
-        if ownedItem?.isFavorite != favoritedItem.isFavorite {
-            let indexPath = indexPathOf(ownedItem!)
-            ownedItem?.isFavorite.toggle()
+        if let ownedItem = ownedItem, ownedItem.isFavorite != favoritedItem.isFavorite {
+            let indexPath = indexPathOf(ownedItem)
+            ownedItem.isFavorite.toggle()
             modifyRowsWhenEditingFavorite(indexPath: indexPath)
+        }
+    }
+    
+    @objc private func handleModifiedItem(_ notification: Notification) {
+        let oldItem = notification.userInfo!["oldItem"] as! Item
+        let newItem = notification.userInfo!["modifiedItem"] as! Item
+        if let modifiedItem = itemStore.allItems.first(where: {$0 == oldItem}) {
+            modifiedItem.name = newItem.name
+            modifiedItem.serialNumber = newItem.serialNumber
+            modifiedItem.valueInDollars = newItem.valueInDollars
+            modifiedItem.dateCreated = newItem.dateCreated
+            tableView.reloadRows(at: [indexPathOf(modifiedItem)], with: .automatic)
         }
     }
 }

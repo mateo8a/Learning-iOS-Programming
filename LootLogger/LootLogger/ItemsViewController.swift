@@ -169,7 +169,15 @@ class ItemsViewController: UITableViewController {
         let handler: (UIContextualAction, UIView, @escaping (Bool) -> Void) -> Void = { action, sourceView, completionHandler in
             let item = self.itemStore.itemAt(indexPath, onlyFavorites: self.showOnlyFavorites)
             item?.isFavorite.toggle()
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            if self.showOnlyFavorites {
+                if self.shownItemsForSection(indexPath.section).count >= 1 {
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                } else {
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            } else {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
             completionHandler(true)
         }
         let favoriteAction = UIContextualAction(style: .normal, title: "Favorite", handler: handler)

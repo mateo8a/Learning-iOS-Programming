@@ -15,6 +15,14 @@ class ItemsViewController: UITableViewController {
         }
     }
     
+    // View Controller methods
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.backButtonTitle = "Backkk"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableView.automaticDimension
@@ -32,6 +40,12 @@ class ItemsViewController: UITableViewController {
         default:
             preconditionFailure("Unexpected segue identifier.")
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
     }
     
     // DataSource methods
@@ -138,7 +152,7 @@ class ItemsViewController: UITableViewController {
     
     // Normal methods
     
-    @IBAction func addNewItem(_ sender: UIButton) {
+    @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         let newItem = itemStore.createItem()
         let row: Int
         let section: Int
@@ -167,17 +181,7 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    @IBAction func toggleEditingMode(_ sender: UIButton) {
-        if isEditing {
-            sender.setTitle("Edit", for: .normal)
-            setEditing(false, animated: true)
-        } else {
-            sender.setTitle("Done", for: .focused)
-            setEditing(true, animated: true)
-        }
-    }
-    
-    @IBAction func OnlyFavoritesButton(_ sender: UIButton) {
+    @IBAction func OnlyFavoritesButton(_ sender: UIBarButtonItem) {
         showOnlyFavorites.toggle()
     }
     

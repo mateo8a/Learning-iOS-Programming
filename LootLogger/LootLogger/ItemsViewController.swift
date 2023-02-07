@@ -21,6 +21,16 @@ class ItemsViewController: UITableViewController {
         super.init(coder: coder)
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.backButtonTitle = "Backkk"
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewItem(_:)), name: Notification.Name("newItem"), object: nil)
+    }
+    
+    @objc func handleNewItem(_ notification: Notification) {
+        let newItem = notification.userInfo!["newItem"] as! Item
+        if !itemStore.allItems.contains([newItem]) {
+            itemStore.createItem(newItem)
+            addNewRow(newItem)
+        }
     }
     
     override func viewDidLoad() {
@@ -153,7 +163,19 @@ class ItemsViewController: UITableViewController {
     // Normal methods
     
     @IBAction func addNewItem(_ sender: UIBarButtonItem) {
-        let newItem = itemStore.createItem()
+        let newItem = createNewItem()
+        addNewRow(newItem)
+    }
+    
+    func createNewItem() -> Item {
+        let newItem = itemStore.createItem(nil)
+        let userInfo = ["newItem" : newItem]
+        let notification = Notification(name: Notification.Name("newItem"), object: self, userInfo: userInfo)
+        NotificationCenter.default.post(notification)
+        return newItem
+    }
+    
+    func addNewRow(_ newItem: Item) {
         let row: Int
         let section: Int
         let onlyItem: Bool

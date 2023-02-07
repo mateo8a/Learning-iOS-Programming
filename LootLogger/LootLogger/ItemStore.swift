@@ -35,8 +35,8 @@ class ItemStore {
         notificationCenter.addObserver(self, selector: #selector(saveChanges), name: UIScene.didEnterBackgroundNotification, object: nil)
     }
     
-    @discardableResult func createItem() -> Item {
-        let newItem = Item(random: true)
+    @discardableResult func createItem(_ item: Item?) -> Item {
+        let newItem = Item(item, random: true)
         allItems.append(newItem)
         // Add option to insert item at the top of the list
         //        allItems.insert(newItem, at: 0)

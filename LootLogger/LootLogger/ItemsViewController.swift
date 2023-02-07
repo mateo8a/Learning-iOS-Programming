@@ -29,36 +29,6 @@ class ItemsViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleFavoritedItem(_:)), name: Notification.Name("favoritedItem"), object: nil)
     }
     
-    @objc func handleNewItem(_ notification: Notification) {
-        let newItem = notification.userInfo!["newItem"] as! Item
-        if !itemStore.allItems.contains([newItem]) {
-            itemStore.createItem(newItem)
-            addNewRow(newItem)
-        }
-    }
-    
-    @objc func handleDeletedItem(_ notification: Notification) {
-        let userInfo = notification.userInfo!
-        let deletedItem = userInfo["deletedItem"] as! Item
-        let indexPath = userInfo["indexPath"] as! IndexPath
-        if itemStore.allItems.contains([deletedItem]) {
-            deleteRow(item: deletedItem, indexPath: indexPath)
-        }
-    }
-    
-    @objc func handleFavoritedItem(_ notification: Notification) {
-        let userInfo = notification.userInfo!
-        let favoritedItem = userInfo["favoritedItem"] as! Item
-        let ownedItem = itemStore.allItems.first { item in
-            item == favoritedItem
-        }
-        if ownedItem?.isFavorite != favoritedItem.isFavorite {
-            let indexPath = indexPathOf(ownedItem!)
-            ownedItem?.isFavorite.toggle()
-            modifyFavoriteRows(indexPath: indexPath)
-        }
-    }
-    
     func indexPathOf(_ item: Item) -> IndexPath {
         let section = item.valueInDollars <= 50 ? 0 : 1
         let row: Int
@@ -161,20 +131,6 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    func deleteRow(item: Item, indexPath: IndexPath) {
-        if tableView.numberOfRows(inSection: indexPath.section) == 1 {
-            let updates: () -> Void = {
-                self.itemStore.deleteItem(item)
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                self.tableView.insertRows(at: [indexPath], with: .automatic)
-            }
-            tableView.performBatchUpdates(updates)
-        } else {
-            itemStore.deleteItem(item)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         itemStore.moveItem(from: sourceIndexPath, to: destinationIndexPath)
     }
@@ -197,7 +153,7 @@ class ItemsViewController: UITableViewController {
         let handler: (UIContextualAction, UIView, @escaping (Bool) -> Void) -> Void = { action, sourceView, completionHandler in
             let item = self.itemStore.itemAt(indexPath, onlyFavorites: self.showOnlyFavorites)
             item?.isFavorite.toggle()
-            self.modifyFavoriteRows(indexPath: indexPath)
+            self.modifyRowsWhenEditingFavorite(indexPath: indexPath)
             
             let userInfo: [String : Any] = ["favoritedItem" : item!, "indexPath" : indexPath]
             let notification = Notification(name: Notification.Name("favoritedItem"), object: self, userInfo: userInfo)
@@ -211,18 +167,6 @@ class ItemsViewController: UITableViewController {
         return UISwipeActionsConfiguration(actions: [favoriteAction])
     }
     
-    func modifyFavoriteRows(indexPath: IndexPath) {
-        if self.showOnlyFavorites {
-            if self.shownItemsForSection(indexPath.section).count >= 1 {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            } else {
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
-        } else {
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
     // Normal methods
     
     @IBAction func addNewItem(_ sender: UIBarButtonItem) {
@@ -230,7 +174,7 @@ class ItemsViewController: UITableViewController {
         addNewRow(newItem)
     }
     
-    func createNewItem() -> Item {
+    private func createNewItem() -> Item {
         let newItem = itemStore.createItem(nil)
         let userInfo = ["newItem" : newItem]
         let notification = Notification(name: Notification.Name("newItem"), object: self, userInfo: userInfo)
@@ -238,7 +182,7 @@ class ItemsViewController: UITableViewController {
         return newItem
     }
     
-    func addNewRow(_ newItem: Item) {
+    private func addNewRow(_ newItem: Item) {
         let row: Int
         let section: Int
         let onlyItem: Bool
@@ -291,5 +235,63 @@ class ItemsViewController: UITableViewController {
     
     private func numberOfShownItemsForSection(_ section: Int) -> Int {
         return shownItemsForSection(section).count
+    }
+    
+    private func deleteRow(item: Item, indexPath: IndexPath) {
+        if tableView.numberOfRows(inSection: indexPath.section) == 1 {
+            let updates: () -> Void = {
+                self.itemStore.deleteItem(item)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+            tableView.performBatchUpdates(updates)
+        } else {
+            itemStore.deleteItem(item)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    private func modifyRowsWhenEditingFavorite(indexPath: IndexPath) {
+        if self.showOnlyFavorites {
+            if self.shownItemsForSection(indexPath.section).count >= 1 {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            } else {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        } else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    // Notification handlers
+    
+    @objc private func handleNewItem(_ notification: Notification) {
+        let newItem = notification.userInfo!["newItem"] as! Item
+        if !itemStore.allItems.contains([newItem]) {
+            itemStore.createItem(newItem)
+            addNewRow(newItem)
+        }
+    }
+    
+    @objc private func handleDeletedItem(_ notification: Notification) {
+        let userInfo = notification.userInfo!
+        let deletedItem = userInfo["deletedItem"] as! Item
+        let indexPath = userInfo["indexPath"] as! IndexPath
+        if itemStore.allItems.contains([deletedItem]) {
+            deleteRow(item: deletedItem, indexPath: indexPath)
+        }
+    }
+    
+    @objc private func handleFavoritedItem(_ notification: Notification) {
+        let userInfo = notification.userInfo!
+        let favoritedItem = userInfo["favoritedItem"] as! Item
+        let ownedItem = itemStore.allItems.first { item in
+            item == favoritedItem
+        }
+        if ownedItem?.isFavorite != favoritedItem.isFavorite {
+            let indexPath = indexPathOf(ownedItem!)
+            ownedItem?.isFavorite.toggle()
+            modifyRowsWhenEditingFavorite(indexPath: indexPath)
+        }
     }
 }

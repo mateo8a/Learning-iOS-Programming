@@ -51,6 +51,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         }
     }
     
+    var imageStore: ImageStore!
+    
     // View Controller methods
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,6 +100,15 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         textField.resignFirstResponder()
     }
     
+    // UIImagePickerControllerDelegate methods
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as! UIImage
+        imageStore.setImage(image, forKey: item.itemKey)
+        imageView.image = image
+        dismiss(animated: true)
+    }
+    
     // Normal methods
     
     let numberFormatter: NumberFormatter = {
@@ -120,10 +131,5 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         imagePicker.sourceType = sourceType
         imagePicker.delegate = self
         return imagePicker
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imageView.image = info[.originalImage] as? UIImage
-        dismiss(animated: true)
     }
 }

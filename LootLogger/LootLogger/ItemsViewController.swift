@@ -9,6 +9,7 @@ import UIKit
 
 class ItemsViewController: UITableViewController {
     var itemStore: ItemStore!
+    var imageStore: ImageStore!
     var showOnlyFavorites: Bool = false {
         didSet {
             tableView.reloadData()
@@ -57,6 +58,7 @@ class ItemsViewController: UITableViewController {
                 let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites)
                 let destination = segue.destination as! DetailViewController
                 destination.item = item
+                destination.imageStore = imageStore
             }
         default:
             preconditionFailure("Unexpected segue identifier.")
@@ -127,6 +129,7 @@ class ItemsViewController: UITableViewController {
         if editingStyle == .delete {
             let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites)!
             deleteRow(item: item, indexPath: indexPath)
+            imageStore.deleteImage(forKey: item.itemKey)
             let userInfo: [String : Any] = ["deletedItem" : item, "indexPath" : indexPath]
             let notification = Notification(name: Notification.Name("deletedItem"), object: self, userInfo: userInfo)
             NotificationCenter.default.post(notification)

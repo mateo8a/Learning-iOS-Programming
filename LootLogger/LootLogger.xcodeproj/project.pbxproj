@@ -460,6 +460,7 @@
 				DEVELOPMENT_TEAM = 6N6RG82H84;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LootLogger/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to associate photos with items";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -489,6 +490,7 @@
 				DEVELOPMENT_TEAM = 6N6RG82H84;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LootLogger/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to associate photos with items";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

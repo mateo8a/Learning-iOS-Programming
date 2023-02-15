@@ -13,6 +13,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     @IBOutlet var serialNumberField: UITextField!
     @IBOutlet var valueField: UITextField!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var deleteImageLabel: UIBarButtonItem!
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
@@ -44,6 +45,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         present(alertController, animated: true)
     }
     
+    @IBAction func deleteImage(_ sender: UIBarButtonItem) {
+        imageStore.deleteImage(forKey: item.itemKey)
+        imageView.image = nil
+        deleteImageLabel.isHidden = true
+    }
+    
     var item: Item! {
         didSet {
             navigationItem.title = item.name
@@ -62,7 +69,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         serialNumberField.text = item.serialNumber
         valueField.text = numberFormatter.string(from: item.valueInDollars as NSNumber)
         dateLabel.text = dateFormatter.string(from: item.dateCreated)
-        imageView.image = imageStore.image(forKey: item.itemKey)
+        
+        if let image = imageStore.image(forKey: item.itemKey) {
+            imageView.image = image
+        } else {
+            deleteImageLabel.isHidden = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -107,6 +119,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         let image = info[.originalImage] as! UIImage
         imageStore.setImage(image, forKey: item.itemKey)
         imageView.image = image
+        deleteImageLabel.isHidden = false
         dismiss(animated: true)
     }
     

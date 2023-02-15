@@ -229,6 +229,12 @@ Cg
                                             <action selector="choosePhotoSource:" destination="beM-Y6-JPk" id="S94-LY-zn0"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="VOG-Go-4JU"/>
+                                    <barButtonItem title="Delete Picture" id="KFm-Ap-iQU">
+                                        <connections>
+                                            <action selector="deleteImage:" destination="beM-Y6-JPk" id="Hci-z9-EYi"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -252,6 +258,7 @@ Cg
                     <navigationItem key="navigationItem" customizationIdentifier="" id="xQd-qA-Gw2"/>
                     <connections>
                         <outlet property="dateLabel" destination="q5H-eN-8gR" id="c7X-eM-09O"/>
+                        <outlet property="deleteImageLabel" destination="KFm-Ap-iQU" id="rtm-mX-AmQ"/>
                         <outlet property="imageView" destination="XUj-hE-WPR" id="egz-a5-OFf"/>
                         <outlet property="nameField" destination="51J-aG-jYE" id="O7H-4k-D5B"/>
                         <outlet property="serialNumberField" destination="ct6-Sx-RG3" id="Wxk-d8-EIf"/>

@@ -53,7 +53,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     var imageStore: ImageStore!
     
-    // View Controller methods
+    // MARK: - View Controller methods
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -95,13 +95,13 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         }
     }
     
-    // Text Field delegate methods
+    // MARK: - Text Field delegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
     
-    // UIImagePickerControllerDelegate methods
+    // MARK: - UIImagePickerControllerDelegate methods
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as! UIImage
@@ -110,7 +110,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         dismiss(animated: true)
     }
     
-    // Normal methods
+    // MARK: - Normal methods
     
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -130,6 +130,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     func imagePicker(for sourceType: UIImagePickerController.SourceType) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = sourceType
+        imagePicker.allowsEditing = true
         imagePicker.delegate = self
         return imagePicker
     }

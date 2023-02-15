@@ -16,7 +16,7 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    // View Controller methods
+    // MARK: View Controller methods
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -71,7 +71,7 @@ class ItemsViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    // DataSource methods
+    // MARK: DataSource methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -144,7 +144,7 @@ class ItemsViewController: UITableViewController {
         !shownItemsForSection(indexPath.section).isEmpty
     }
     
-    // Delegate methods
+    // MARK: UITableViewDelegate methods
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if sourceIndexPath.section != proposedDestinationIndexPath.section {
@@ -172,7 +172,7 @@ class ItemsViewController: UITableViewController {
         return UISwipeActionsConfiguration(actions: [favoriteAction])
     }
     
-    // Normal methods
+    // MARK: Normal methods
     
     @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         let newItem = createNewItem()
@@ -268,7 +268,7 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    // Notification handlers
+    // MARK: Notification handlers
     
     @objc private func handleNewItem(_ notification: Notification) {
         let newItem = notification.userInfo!["newItem"] as! Item

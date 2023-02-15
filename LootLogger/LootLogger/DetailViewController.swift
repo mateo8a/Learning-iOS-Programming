@@ -62,6 +62,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         serialNumberField.text = item.serialNumber
         valueField.text = numberFormatter.string(from: item.valueInDollars as NSNumber)
         dateLabel.text = dateFormatter.string(from: item.dateCreated)
+        imageView.image = imageStore.image(forKey: item.itemKey)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

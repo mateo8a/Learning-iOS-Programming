@@ -48,7 +48,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     @IBAction func deleteImage(_ sender: UIBarButtonItem) {
         imageStore.deleteImage(forKey: item.itemKey)
         imageView.image = nil
-        deleteImageLabel.isHidden = true
+        deleteImageLabel.isEnabled = false
     }
     
     var item: Item! {
@@ -73,7 +73,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         if let image = imageStore.image(forKey: item.itemKey) {
             imageView.image = image
         } else {
-            deleteImageLabel.isHidden = true
+            deleteImageLabel.isEnabled = false
         }
     }
     
@@ -119,7 +119,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         let image = info[.originalImage] as! UIImage
         imageStore.setImage(image, forKey: item.itemKey)
         imageView.image = image
-        deleteImageLabel.isHidden = false
+        deleteImageLabel.isEnabled = true
         dismiss(animated: true)
     }
     

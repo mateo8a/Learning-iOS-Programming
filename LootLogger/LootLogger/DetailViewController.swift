@@ -46,9 +46,20 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     }
     
     @IBAction func deleteImage(_ sender: UIBarButtonItem) {
-        imageStore.deleteImage(forKey: item.itemKey)
-        imageView.image = nil
-        deleteImageLabel.isEnabled = false
+        let alertController = UIAlertController(title: "Delete picture?", message: nil, preferredStyle: .actionSheet)
+        alertController.modalPresentationStyle = .automatic
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {alert in
+            self.imageStore.deleteImage(forKey: self.item.itemKey)
+            self.imageView.image = nil
+            self.deleteImageLabel.isEnabled = false
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
     }
     
     var item: Item! {

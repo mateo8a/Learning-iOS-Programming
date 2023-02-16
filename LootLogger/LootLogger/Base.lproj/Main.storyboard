@@ -188,16 +188,16 @@ Cg
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="A08-zD-Lf8">
-                                        <rect key="frame" x="0.0" y="126" width="393" height="524"/>
+                                        <rect key="frame" x="0.0" y="126" width="393" height="70"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" placeholderIntrinsicWidth="393" placeholderIntrinsicHeight="538.66666666666663" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5H-eN-8gR">
-                                                <rect key="frame" x="0.0" y="0.0" width="393" height="489"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" placeholderIntrinsicWidth="393" placeholderIntrinsicHeight="430.69999999999999" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5H-eN-8gR">
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="35"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iwp-9p-TyD">
-                                                <rect key="frame" x="0.0" y="489" width="393" height="35"/>
+                                                <rect key="frame" x="0.0" y="35" width="393" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="NMO-M4-StL"/>
                                                 </constraints>
@@ -208,7 +208,13 @@ Cg
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Iwp-9p-TyD" firstAttribute="height" secondItem="q5H-eN-8gR" secondAttribute="height" id="SNp-0P-u3I"/>
+                                        </constraints>
                                     </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="XUj-hE-WPR">
+                                        <rect key="frame" x="0.0" y="204" width="393" height="446"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ct6-Sx-RG3" firstAttribute="leading" secondItem="ZUk-Pw-2HL" secondAttribute="leading" id="OsD-Jf-Uhq"/>
@@ -221,6 +227,12 @@ Cg
                                     <barButtonItem systemItem="camera" id="0AN-l9-6AD">
                                         <connections>
                                             <action selector="choosePhotoSource:" destination="beM-Y6-JPk" id="S94-LY-zn0"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="VOG-Go-4JU"/>
+                                    <barButtonItem title="Delete Picture" id="KFm-Ap-iQU">
+                                        <connections>
+                                            <action selector="deleteImage:" destination="beM-Y6-JPk" id="Hci-z9-EYi"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -246,6 +258,8 @@ Cg
                     <navigationItem key="navigationItem" customizationIdentifier="" id="xQd-qA-Gw2"/>
                     <connections>
                         <outlet property="dateLabel" destination="q5H-eN-8gR" id="c7X-eM-09O"/>
+                        <outlet property="deleteImageLabel" destination="KFm-Ap-iQU" id="rtm-mX-AmQ"/>
+                        <outlet property="imageView" destination="XUj-hE-WPR" id="egz-a5-OFf"/>
                         <outlet property="nameField" destination="51J-aG-jYE" id="O7H-4k-D5B"/>
                         <outlet property="serialNumberField" destination="ct6-Sx-RG3" id="Wxk-d8-EIf"/>
                         <outlet property="valueField" destination="ZUk-Pw-2HL" id="6A4-iv-Qax"/>

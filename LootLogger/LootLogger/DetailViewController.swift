@@ -7,11 +7,13 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITextFieldDelegate {
+class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @IBOutlet var imageView: UIImageView!
     @IBOutlet var nameField: UITextField!
     @IBOutlet var serialNumberField: UITextField!
     @IBOutlet var valueField: UITextField!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var deleteImageLabel: UIBarButtonItem!
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
@@ -21,12 +23,40 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         alertController.modalPresentationStyle = .popover
         alertController.popoverPresentationController?.sourceItem = sender
         
-        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: {alert in print("Present Camera")})
-        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default, handler: {alert in print("Present photo library")})
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: {alert in
+                let imagePicker = self.imagePicker(for: .camera)
+                self.present(imagePicker, animated: true)
+            })
+            alertController.addAction(cameraAction)
+        }
+        
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default, handler: {alert in
+            let imagePicker = self.imagePicker(for: .photoLibrary)
+            imagePicker.modalPresentationStyle = .popover
+            imagePicker.popoverPresentationController?.sourceItem = sender
+            self.present(imagePicker, animated: true)
+        })
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        alertController.addAction(cameraAction)
         alertController.addAction(photoLibraryAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
+    }
+    
+    @IBAction func deleteImage(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Delete picture?", message: nil, preferredStyle: .actionSheet)
+        alertController.modalPresentationStyle = .automatic
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {alert in
+            self.imageStore.deleteImage(forKey: self.item.itemKey)
+            self.imageView.image = nil
+            self.deleteImageLabel.isEnabled = false
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alertController.addAction(deleteAction)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true)
@@ -39,7 +69,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // View Controller methods
+    var imageStore: ImageStore!
+    
+    // MARK: - View Controller methods
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -48,6 +80,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         serialNumberField.text = item.serialNumber
         valueField.text = numberFormatter.string(from: item.valueInDollars as NSNumber)
         dateLabel.text = dateFormatter.string(from: item.dateCreated)
+        
+        if let image = imageStore.image(forKey: item.itemKey) {
+            imageView.image = image
+        } else {
+            deleteImageLabel.isEnabled = false
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,13 +118,23 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // Text Field delegate methods
+    // MARK: - Text Field delegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
     
-    // Normal methods
+    // MARK: - UIImagePickerControllerDelegate methods
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as! UIImage
+        imageStore.setImage(image, forKey: item.itemKey)
+        imageView.image = image
+        deleteImageLabel.isEnabled = true
+        dismiss(animated: true)
+    }
+    
+    // MARK: - Normal methods
     
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -102,4 +150,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         formatter.timeStyle = .none
        return formatter
     }()
+    
+    func imagePicker(for sourceType: UIImagePickerController.SourceType) -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        return imagePicker
+    }
 }

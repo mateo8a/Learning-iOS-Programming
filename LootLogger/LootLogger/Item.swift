@@ -14,17 +14,19 @@ class Item: Equatable, Codable {
     var serialNumber: String?
     var dateCreated: Date
     var isFavorite: Bool = false
+    let itemKey: String
     
-    init(name: String, serialNumber: String?, valueInDollars: Int, dateCreated: Date = Date()) {
+    init(name: String, serialNumber: String?, valueInDollars: Int, dateCreated: Date = Date(), itemKey: String = UUID().uuidString) {
         self.name = name
         self.valueInDollars = valueInDollars
         self.serialNumber = serialNumber
         self.dateCreated = dateCreated
+        self.itemKey = itemKey
     }
     
     convenience init(_ item: Item?, random: Bool) {
         if let item = item {
-            self.init(name: item.name, serialNumber: item.serialNumber, valueInDollars: item.valueInDollars, dateCreated: item.dateCreated)
+            self.init(name: item.name, serialNumber: item.serialNumber, valueInDollars: item.valueInDollars, dateCreated: item.dateCreated, itemKey: item.itemKey)
         } else {
             self.init(random: random)
         }
@@ -42,9 +44,10 @@ class Item: Equatable, Codable {
             UUID().uuidString.components(separatedBy: "-").first!
             self.init(name: randomName,
                       serialNumber: randomSerialNumber,
-                      valueInDollars: randomValue)
+                      valueInDollars: randomValue,
+                      itemKey: UUID().uuidString)
         } else {
-            self.init(name: "", serialNumber: nil, valueInDollars: 0)
+            self.init(name: "", serialNumber: nil, valueInDollars: 0, itemKey: UUID().uuidString)
         }
     }
     

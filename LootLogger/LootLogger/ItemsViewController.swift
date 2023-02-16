@@ -9,13 +9,14 @@ import UIKit
 
 class ItemsViewController: UITableViewController {
     var itemStore: ItemStore!
+    var imageStore: ImageStore!
     var showOnlyFavorites: Bool = false {
         didSet {
             tableView.reloadData()
         }
     }
     
-    // View Controller methods
+    // MARK: View Controller methods
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -57,6 +58,7 @@ class ItemsViewController: UITableViewController {
                 let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites)
                 let destination = segue.destination as! DetailViewController
                 destination.item = item
+                destination.imageStore = imageStore
             }
         default:
             preconditionFailure("Unexpected segue identifier.")
@@ -69,7 +71,7 @@ class ItemsViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    // DataSource methods
+    // MARK: DataSource methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -127,6 +129,7 @@ class ItemsViewController: UITableViewController {
         if editingStyle == .delete {
             let item = itemStore.itemAt(indexPath, onlyFavorites: showOnlyFavorites)!
             deleteRow(item: item, indexPath: indexPath)
+            imageStore.deleteImage(forKey: item.itemKey)
             let userInfo: [String : Any] = ["deletedItem" : item, "indexPath" : indexPath]
             let notification = Notification(name: Notification.Name("deletedItem"), object: self, userInfo: userInfo)
             NotificationCenter.default.post(notification)
@@ -141,7 +144,7 @@ class ItemsViewController: UITableViewController {
         !shownItemsForSection(indexPath.section).isEmpty
     }
     
-    // Delegate methods
+    // MARK: UITableViewDelegate methods
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if sourceIndexPath.section != proposedDestinationIndexPath.section {
@@ -169,7 +172,7 @@ class ItemsViewController: UITableViewController {
         return UISwipeActionsConfiguration(actions: [favoriteAction])
     }
     
-    // Normal methods
+    // MARK: Normal methods
     
     @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         let newItem = createNewItem()
@@ -265,7 +268,7 @@ class ItemsViewController: UITableViewController {
         }
     }
     
-    // Notification handlers
+    // MARK: Notification handlers
     
     @objc private func handleNewItem(_ notification: Notification) {
         let newItem = notification.userInfo!["newItem"] as! Item

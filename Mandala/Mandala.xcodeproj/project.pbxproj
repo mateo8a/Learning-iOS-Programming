@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A26BA2F129A418C700F3C69D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA2F029A418C700F3C69D /* AppDelegate.swift */; };
 		A26BA2F329A418C700F3C69D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA2F229A418C700F3C69D /* SceneDelegate.swift */; };
-		A26BA2F529A418C700F3C69D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA2F429A418C700F3C69D /* ViewController.swift */; };
+		A26BA2F529A418C700F3C69D /* MoodSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA2F429A418C700F3C69D /* MoodSelectionViewController.swift */; };
 		A26BA2F829A418C700F3C69D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A26BA2F629A418C700F3C69D /* Main.storyboard */; };
 		A26BA2FA29A418CB00F3C69D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A26BA2F929A418CB00F3C69D /* Assets.xcassets */; };
 		A26BA2FD29A418CB00F3C69D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A26BA2FB29A418CB00F3C69D /* LaunchScreen.storyboard */; };
@@ -18,6 +18,8 @@
 		A26BA31429A418CB00F3C69D /* MandalaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA31329A418CB00F3C69D /* MandalaUITestsLaunchTests.swift */; };
 		A26BA32329A419CF00F3C69D /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32229A419CF00F3C69D /* Mood.swift */; };
 		A26BA32529A41A2F00F3C69D /* MoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32429A41A2F00F3C69D /* MoodEntry.swift */; };
+		A26BA32729A41FEA00F3C69D /* UIColor+Mandala.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32629A41FEA00F3C69D /* UIColor+Mandala.swift */; };
+		A26BA32929A4209800F3C69D /* UIImage+Mandala.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32829A4209800F3C69D /* UIImage+Mandala.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +43,7 @@
 		A26BA2ED29A418C700F3C69D /* Mandala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mandala.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26BA2F029A418C700F3C69D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A26BA2F229A418C700F3C69D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A26BA2F429A418C700F3C69D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A26BA2F429A418C700F3C69D /* MoodSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodSelectionViewController.swift; sourceTree = "<group>"; };
 		A26BA2F729A418C700F3C69D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A26BA2F929A418CB00F3C69D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A26BA2FC29A418CB00F3C69D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +55,8 @@
 		A26BA31329A418CB00F3C69D /* MandalaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandalaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A26BA32229A419CF00F3C69D /* Mood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
 		A26BA32429A41A2F00F3C69D /* MoodEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodEntry.swift; sourceTree = "<group>"; };
+		A26BA32629A41FEA00F3C69D /* UIColor+Mandala.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Mandala.swift"; sourceTree = "<group>"; };
+		A26BA32829A4209800F3C69D /* UIImage+Mandala.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Mandala.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,9 +109,11 @@
 			children = (
 				A26BA32229A419CF00F3C69D /* Mood.swift */,
 				A26BA32429A41A2F00F3C69D /* MoodEntry.swift */,
+				A26BA32629A41FEA00F3C69D /* UIColor+Mandala.swift */,
+				A26BA32829A4209800F3C69D /* UIImage+Mandala.swift */,
 				A26BA2F029A418C700F3C69D /* AppDelegate.swift */,
 				A26BA2F229A418C700F3C69D /* SceneDelegate.swift */,
-				A26BA2F429A418C700F3C69D /* ViewController.swift */,
+				A26BA2F429A418C700F3C69D /* MoodSelectionViewController.swift */,
 				A26BA2F629A418C700F3C69D /* Main.storyboard */,
 				A26BA2F929A418CB00F3C69D /* Assets.xcassets */,
 				A26BA2FB29A418CB00F3C69D /* LaunchScreen.storyboard */,
@@ -265,9 +271,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A26BA32329A419CF00F3C69D /* Mood.swift in Sources */,
-				A26BA2F529A418C700F3C69D /* ViewController.swift in Sources */,
+				A26BA2F529A418C700F3C69D /* MoodSelectionViewController.swift in Sources */,
 				A26BA32529A41A2F00F3C69D /* MoodEntry.swift in Sources */,
 				A26BA2F129A418C700F3C69D /* AppDelegate.swift in Sources */,
+				A26BA32729A41FEA00F3C69D /* UIColor+Mandala.swift in Sources */,
+				A26BA32929A4209800F3C69D /* UIImage+Mandala.swift in Sources */,
 				A26BA2F329A418C700F3C69D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

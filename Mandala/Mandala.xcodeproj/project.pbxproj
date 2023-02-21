@@ -20,6 +20,8 @@
 		A26BA32529A41A2F00F3C69D /* MoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32429A41A2F00F3C69D /* MoodEntry.swift */; };
 		A26BA32729A41FEA00F3C69D /* UIColor+Mandala.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32629A41FEA00F3C69D /* UIColor+Mandala.swift */; };
 		A26BA32929A4209800F3C69D /* UIImage+Mandala.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32829A4209800F3C69D /* UIImage+Mandala.swift */; };
+		A26BA32B29A52CDC00F3C69D /* MoodListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32A29A52CDC00F3C69D /* MoodListViewController.swift */; };
+		A26BA32D29A532A700F3C69D /* MoodsConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26BA32C29A532A700F3C69D /* MoodsConfigurable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		A26BA32429A41A2F00F3C69D /* MoodEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodEntry.swift; sourceTree = "<group>"; };
 		A26BA32629A41FEA00F3C69D /* UIColor+Mandala.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Mandala.swift"; sourceTree = "<group>"; };
 		A26BA32829A4209800F3C69D /* UIImage+Mandala.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Mandala.swift"; sourceTree = "<group>"; };
+		A26BA32A29A52CDC00F3C69D /* MoodListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodListViewController.swift; sourceTree = "<group>"; };
+		A26BA32C29A532A700F3C69D /* MoodsConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsConfigurable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,13 +111,15 @@
 		A26BA2EF29A418C700F3C69D /* Mandala */ = {
 			isa = PBXGroup;
 			children = (
+				A26BA2F029A418C700F3C69D /* AppDelegate.swift */,
+				A26BA2F229A418C700F3C69D /* SceneDelegate.swift */,
 				A26BA32229A419CF00F3C69D /* Mood.swift */,
 				A26BA32429A41A2F00F3C69D /* MoodEntry.swift */,
 				A26BA32629A41FEA00F3C69D /* UIColor+Mandala.swift */,
 				A26BA32829A4209800F3C69D /* UIImage+Mandala.swift */,
-				A26BA2F029A418C700F3C69D /* AppDelegate.swift */,
-				A26BA2F229A418C700F3C69D /* SceneDelegate.swift */,
 				A26BA2F429A418C700F3C69D /* MoodSelectionViewController.swift */,
+				A26BA32A29A52CDC00F3C69D /* MoodListViewController.swift */,
+				A26BA32C29A532A700F3C69D /* MoodsConfigurable.swift */,
 				A26BA2F629A418C700F3C69D /* Main.storyboard */,
 				A26BA2F929A418CB00F3C69D /* Assets.xcassets */,
 				A26BA2FB29A418CB00F3C69D /* LaunchScreen.storyboard */,
@@ -271,8 +277,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A26BA32329A419CF00F3C69D /* Mood.swift in Sources */,
+				A26BA32B29A52CDC00F3C69D /* MoodListViewController.swift in Sources */,
 				A26BA2F529A418C700F3C69D /* MoodSelectionViewController.swift in Sources */,
 				A26BA32529A41A2F00F3C69D /* MoodEntry.swift in Sources */,
+				A26BA32D29A532A700F3C69D /* MoodsConfigurable.swift in Sources */,
 				A26BA2F129A418C700F3C69D /* AppDelegate.swift in Sources */,
 				A26BA32729A41FEA00F3C69D /* UIColor+Mandala.swift in Sources */,
 				A26BA32929A4209800F3C69D /* UIImage+Mandala.swift in Sources */,

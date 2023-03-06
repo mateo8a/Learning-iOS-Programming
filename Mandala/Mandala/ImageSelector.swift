@@ -19,7 +19,12 @@ class ImageSelector: UIControl {
         configureViewHierarchy()
     }
     
-    var selectedIndex = 0
+    var selectedIndex = 0 {
+        didSet {
+            let imageButton = imageButtons[selectedIndex]
+            highlightViewXConstraint = highlightView.centerXAnchor.constraint(equalTo: imageButton.centerXAnchor)
+        }
+    }
     
     private var imageButtons = [UIButton]() {
         didSet {
@@ -51,6 +56,13 @@ class ImageSelector: UIControl {
         sendActions(for: .valueChanged)
     }
     
+    private let highlightView: UIView = {
+        let view = UIView()
+        view.backgroundColor = view.tintColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let selectorStackView: UIStackView = {
         let stackView = UIStackView()
         
@@ -65,12 +77,30 @@ class ImageSelector: UIControl {
     
     private func configureViewHierarchy() {
         addSubview(selectorStackView)
+        insertSubview(highlightView, belowSubview: selectorStackView)
         
         NSLayoutConstraint.activate([
             selectorStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             selectorStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             selectorStackView.topAnchor.constraint(equalTo: topAnchor),
-            selectorStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            selectorStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            highlightView.heightAnchor.constraint(equalTo: highlightView.widthAnchor),
+            highlightView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9),
+            highlightView.centerYAnchor.constraint(equalTo: selectorStackView.centerYAnchor)
         ])
+    }
+    
+    private var highlightViewXConstraint: NSLayoutConstraint! {
+        didSet {
+            oldValue?.isActive = false
+            highlightViewXConstraint.isActive = true
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        highlightView.layer.cornerRadius = highlightView.bounds.height / 2.0
     }
 }

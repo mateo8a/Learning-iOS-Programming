@@ -58,7 +58,15 @@ class MoodSelectionViewController: UIViewController {
     
     @IBAction private func moodSelectionChanged(_ sender: ImageSelector) {
         let selectedIndex = sender.selectedIndex
-        currentMood = moods[selectedIndex]
+        
+        let selectionAnimator = UIViewPropertyAnimator(
+            duration: 0.5,
+            curve: .easeInOut,
+            animations: {
+                self.currentMood = self.moods[selectedIndex]
+            }
+        )
+        selectionAnimator.startAnimation()
     }
     
     override func viewDidLoad() {

@@ -23,6 +23,7 @@ class ImageSelector: UIControl {
         didSet {
             let imageButton = imageButtons[selectedIndex]
             highlightViewXConstraint = highlightView.centerXAnchor.constraint(equalTo: imageButton.centerXAnchor)
+            highlightView.backgroundColor = highlightColor(forIndex: selectedIndex)
         }
     }
     
@@ -48,17 +49,36 @@ class ImageSelector: UIControl {
         }
     }
     
+    var highlightColors = [UIColor]() {
+        didSet {
+            highlightView.backgroundColor = highlightColor(forIndex: selectedIndex)
+        }
+    }
+    
+    private func highlightColor(forIndex index: Int) -> UIColor {
+        return highlightColors[index]
+    }
+    
     @objc private func imageButtonTapped(_ sender: UIButton) {
         guard let buttonIndex = imageButtons.firstIndex(of: sender) else {
             preconditionFailure("The buttons and images are not parallel.")
         }
-        selectedIndex = buttonIndex
+        
+        let selectionAnimator = UIViewPropertyAnimator(
+            duration: 0.5,
+            dampingRatio: 0.5,
+            animations: {
+                self.selectedIndex = buttonIndex
+                self.layoutIfNeeded()
+            }
+        )
+        
+        selectionAnimator.startAnimation()
         sendActions(for: .valueChanged)
     }
     
     private let highlightView: UIView = {
         let view = UIView()
-        view.backgroundColor = view.tintColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

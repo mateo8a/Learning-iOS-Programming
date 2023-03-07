@@ -17,6 +17,7 @@ class MoodSelectionViewController: UIViewController {
     var moods = [Mood]() {
         didSet {
             currentMood = moods.first
+            moodSelector.highlightColors = moods.map { $0.color }
             moodSelector.images = moods.map { $0.image }
         }
     }
@@ -57,7 +58,15 @@ class MoodSelectionViewController: UIViewController {
     
     @IBAction private func moodSelectionChanged(_ sender: ImageSelector) {
         let selectedIndex = sender.selectedIndex
-        currentMood = moods[selectedIndex]
+        
+        let selectionAnimator = UIViewPropertyAnimator(
+            duration: 0.5,
+            curve: .easeInOut,
+            animations: {
+                self.currentMood = self.moods[selectedIndex]
+            }
+        )
+        selectionAnimator.startAnimation()
     }
     
     override func viewDidLoad() {

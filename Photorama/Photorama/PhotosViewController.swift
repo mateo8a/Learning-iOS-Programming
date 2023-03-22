@@ -12,11 +12,14 @@ class PhotosViewController: UIViewController {
     @IBOutlet private var collectionView: UICollectionView!
     var store: PhotoStore!
     let photoDataSource = PhotoDataSource()
+    let delegate = PhotoCollectionDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.dataSource = photoDataSource
+        collectionView.delegate = delegate
+        delegate.store = store
         
         store.fetchInterestingPhotos { result in
             switch result {

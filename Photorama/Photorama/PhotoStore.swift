@@ -22,7 +22,6 @@ class PhotoStore {
             OperationQueue.main.addOperation {
                 completion(result)
             }
-            completion(result)
         })
         
         task.resume()

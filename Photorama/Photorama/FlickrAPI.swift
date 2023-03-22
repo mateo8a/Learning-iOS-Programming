@@ -47,4 +47,38 @@ struct FlickrAPI {
         
         return components.url!
     }
+    
+    static func photos(fromJSON data: Data) -> Result<[Photo], Error> {
+        do {
+            let decoder = JSONDecoder()
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            
+            let flickrResponse = try decoder.decode(FlickrResponse.self, from: data)
+            let photos = flickrResponse.photosInfo.photos.filter { photo in photo.remoteURL != nil }
+            return .success(photos)
+        } catch {
+            return .failure(error)
+        }
+    }
+}
+
+struct FlickrResponse: Codable {
+    let photosInfo: FlickrPhotosResponse
+    
+    enum CodingKeys: String, CodingKey {
+        case photosInfo = "photos"
+    }
+}
+
+struct FlickrPhotosResponse: Codable {
+    let photos: [Photo]
+    
+    enum CodingKeys: String, CodingKey {
+        case photos = "photo"
+    }
 }
